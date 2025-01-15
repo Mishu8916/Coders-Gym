@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer components{
+    .primary-btn{
+        @apply inline-block rounded-md bg-primary hover:bg-primary/70 duration-300 py-2 px-6 text-white; 
+    }
+    .outline-btn{
+        @apply inline-block rounded-md border-2 border-primary hover:bg-primary/70 hover:text-black duration-300 py-2 px-6 text-primary; 
+    }
+    /* scrolling effect for the footer section */
+    @keyframes scroll-fade {
+        0% {
+          transform: translateX(100%);
+          opacity: 1;
+        }
+        80% {
+          opacity: 1;
+        }
+        100% {
+          transform: translateX(-100%);
+          opacity: 0;
+        }
+      }
+      
+      .animate-scroll-fade {
+        animation: scroll-fade 5s linear infinite;
+      }
+         
+}
