@@ -19,7 +19,7 @@ const Login = () => {
   }, [isOpen]);
 
   const closeModal = () => {
-    setIsOpen(false);
+    navigate(-1);
   };
 
   if (!isOpen) return null;

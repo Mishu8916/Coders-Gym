@@ -40,7 +40,7 @@ const Login1 = () => {
 
         {/* Close Button */}
         <button
-          onClick={closeModal}
+          onClick={()=>navigate("/")}
           className="absolute top-2 right-2 bg-white dark:bg-dark dark:text-white text-2xl"
         >
           &times;
