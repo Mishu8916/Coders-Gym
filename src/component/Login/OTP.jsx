@@ -66,7 +66,7 @@ const OTP = () => {
       <div className="relative bg-white dark:bg-dark p-8 rounded-lg shadow-lg w-[90%] sm:w-[80%] md:w-[60%] lg:w-[40%] max-w-md overflow-y-auto max-h-[90vh]">
         {/* Close Button */}
         <button
-          onClick={closeModal}
+          onClick={()=>navigate('/')}
           className="absolute top-2 right-2 bg-white dark:bg-dark dark:text-white text-2xl"
         >
           &times;

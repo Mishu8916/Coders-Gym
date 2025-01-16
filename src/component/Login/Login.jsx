@@ -4,7 +4,7 @@ import { FaDumbbell } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen] = useState(true);
     const navigate = useNavigate();
   // Add or remove body scroll when modal opens/closes
   useEffect(() => {
