@@ -1,5 +1,5 @@
 import React from 'react';
-import BannerImg from '../../assets/yoga.png';
+import BannerImg from '../../assets/Home/yoga.png';
 
 export const About2 = () => {
     return (

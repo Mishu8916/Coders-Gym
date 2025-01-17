@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '../../assets/logo.png';
+import Logo from '../../assets/Home/logo.png';
 import { BiPhoneCall } from 'react-icons/bi';
 import DarkMode from './DarkMode';
 import { FaDumbbell } from "react-icons/fa";

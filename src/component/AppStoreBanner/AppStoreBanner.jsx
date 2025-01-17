@@ -2,7 +2,7 @@ import React from "react";
 import AppStoreImg from "../../assets/website/app_store.png";
 import PlayStoreImg from "../../assets/website/play_store.png";
 // import pattern from "../../assets/dumbell.jpg"; any image can be used 
-import img from "../../assets/gym.jpg"
+import img from "../../assets/Home/gym.jpg"
 const bannerImg = {
   backgroundImage: `url(${img})`,
   backgroundPosition: "center",

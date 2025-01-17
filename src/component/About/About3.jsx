@@ -1,5 +1,5 @@
 import React from 'react'
-import BannerImg from '../../assets/pushup1.png'
+import BannerImg from '../../assets/Home/pushup1.png'
 export const About3 = () => {
     return (
         <div className="py-14 dark:bg-black bg-slate-100 duration-300">

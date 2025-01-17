@@ -1,5 +1,5 @@
 import React from 'react'
-import BannerImg from '../../assets/banner1.avif'
+import BannerImg from '../../assets/Home/banner1.avif'
 export const About = () => {
     return (
         <div className="py-14 dark:bg-black bg-slate-100 duration-300">
