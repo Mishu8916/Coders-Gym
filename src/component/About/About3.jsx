@@ -1,5 +1,5 @@
 import React from 'react'
-import BannerImg from '../../assets/pushups.png'
+import BannerImg from '../../assets/pushup1.png'
 export const About3 = () => {
     return (
         <div className="py-14 dark:bg-black bg-slate-100 duration-300">
@@ -9,7 +9,7 @@ export const About3 = () => {
                         <img
                             src={BannerImg}
                             alt=""
-                            className="sm:scale-125 sm:-translate-x-11 max-h-[300px] drop-shadow-[2px_10px_6px_rgba(0,0,0,0.50)] mx-auto"
+                            className="rounded-md sm:scale-125 sm:-translate-x-11 max-h-[300px] drop-shadow-[2px_10px_6px_rgba(0,0,0,0.50)] mx-auto"
                         />
                     </div>
                     <div>
@@ -20,7 +20,7 @@ export const About3 = () => {
                                 </div>
                                 <div>
                                     <p className="text-primary">Muscel Up</p>
-                                    <h1 className="text-2xl sm:text-4xl font-bold dark:text-white">About us</h1>
+                                    <h1 className="text-2xl sm:text-4xl font-bold dark:text-white">Pump with us</h1>
                                 </div>
                             </div>
                             <p data-aos="fade-up" className="text-xl font-serif leading-8 tracking-wide dark:text-white">

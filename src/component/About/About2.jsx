@@ -35,7 +35,7 @@ export const About2 = () => {
                         <img
                             src={BannerImg}
                             alt="Yoga Club Banner"
-                            className="sm:scale-125 sm:-translate-x-11 max-h-[300px] drop-shadow-[2px_10px_6px_rgba(0,0,0,0.50)]"
+                            className="rounded-md sm:scale-125 sm:-translate-x-11 max-h-[300px] drop-shadow-[2px_10px_6px_rgba(0,0,0,0.50)]"
                         />
                     </div>
                 </div>

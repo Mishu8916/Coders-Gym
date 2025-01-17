@@ -10,22 +10,10 @@ import {
 } from "react-icons/fa";
 
 export const Navlinks = [
-    {
-        id: 1,
-        name: "SERVICES",
-        link: "/#services",
-    },
-    {
-        id: 2,
-        name: "ABOUT",
-        link: "/#about",
-    },
-    {
-        id: 3,
-        name: "JOIN",
-        link: "/#join",
-    },
-];
+    { id: 1, name: "HOME", link: "/" },
+    { id: 2, name: "SERVCES", link: "/services" },
+    { id: 3, name: "JOIN", link: "/login" },
+  ];
 
 const Footer = () => {
     return (

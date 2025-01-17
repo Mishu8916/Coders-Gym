@@ -1,5 +1,5 @@
 import React from 'react'
-import BannerImg from '../../assets/banner.png'
+import BannerImg from '../../assets/banner1.avif'
 export const About = () => {
     return (
         <div className="py-14 dark:bg-black bg-slate-100 duration-300">
@@ -9,7 +9,7 @@ export const About = () => {
                         <img
                             src={BannerImg}
                             alt=""
-                            className="sm:scale-125 sm:-translate-x-11 max-h-[300px] drop-shadow-[2px_10px_6px_rgba(0,0,0,0.50)] mx-auto"
+                            className="rounded-md sm:scale-125 sm:-translate-x-11 max-h-[300px] drop-shadow-[2px_10px_6px_rgba(0,0,0,0.50)] mx-auto"
                         />
                     </div>
                     <div>
