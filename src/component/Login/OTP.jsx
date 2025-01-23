@@ -95,14 +95,15 @@ const OTP = () => {
         </div>
 
         {/* Confirm Button */}
-        <button className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition">
+        <button onClick={()=>navigate('/Landing')} 
+        className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-500 transition">
           Confirm
         </button>
 
         {/* Timer & Resend */}
         <div className="text-center mt-4">
           {timer > 0 ? (
-            <p className="text-gray-400">OTP SENT 00:{timer < 10 ? `0${timer}` : timer}</p>
+            <p className="dark:text-white font-semibold">OTP SENT 00:{timer < 10 ? `0${timer}` : timer}</p>
           ) : (
             <button
               onClick={handleResend}

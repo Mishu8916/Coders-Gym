@@ -3,12 +3,12 @@ import { BiDumbbell } from "react-icons/bi";
 import TertiaryLink from "../Form/TertiaryLink";
 import Serviceimg from "../../assets/ServicesImg/1.avif";
 import Serviceimg1 from "../../assets/ServicesImg/2.avif";
-import Serviceimg2 from "../../assets/ServicesImg/3.avif"
-import Serviceimg3 from "../../assets/ServicesImg/4.avif"
-import Serviceimg4 from "../../assets/ServicesImg/5.avif"
-import Serviceimg5 from "../../assets/ServicesImg/6.avif"
-import Serviceimg6 from "../../assets/ServicesImg/7.avif"
-import Serviceimg7 from "../../assets/ServicesImg/8.avif"
+import Serviceimg2 from "../../assets/ServicesImg/3.avif";
+import Serviceimg3 from "../../assets/ServicesImg/4.avif";
+import Serviceimg4 from "../../assets/ServicesImg/5.avif";
+import Serviceimg5 from "../../assets/ServicesImg/6.avif";
+import Serviceimg6 from "../../assets/ServicesImg/7.avif";
+import Serviceimg7 from "../../assets/ServicesImg/8.avif";
 const Services = () => {
   const services = [
     {

@@ -13,8 +13,9 @@ import Footer from './component/Footer/Footer';
 import Bmi from './component/BMI/Bmi';
 import Login from './component/Login/Login';
 import Login1 from './component/Login/Login1';
-import OTP from './component/Login/OTP';
+import OTP from './component/Login/Otp';
 import Services from './component/Services/Services';
+import Landing from './component/Landing_Page/Landing';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'; // importing the react router dom
 
 export const App = () => {
@@ -57,12 +58,16 @@ export const App = () => {
       path: "/services",
       element: <Services />,
     },
+    {
+      path:"/landing",
+      element:<Landing/>,
+    },
   ]);
 
   return (
     <div className="overflow-x-hidden bg-white dark:bg-black dark:text-white text-black">
       <Navbar />
-      <RouterProvider router={router} />
+      <RouterProvider router={router}/>
     </div>
   );
 };
