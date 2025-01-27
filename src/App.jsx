@@ -1,5 +1,6 @@
 import React from 'react';
 import Navbar from "./component/Navbar/Navbar";
+import LandingNavbar from './component/Landing_Page/LandingNavbar';
 // import Hero from './component/Hero/Hero'
 import Hero1 from './component/Hero/Hero1';
 import About from './component/About/About';
@@ -60,7 +61,7 @@ export const App = () => {
     },
     {
       path:"/landing",
-      element:<Landing/>,
+      element:<LandingNavbar/>,
     },
   ]);
 
@@ -71,5 +72,4 @@ export const App = () => {
     </div>
   );
 };
-
 export default App;
