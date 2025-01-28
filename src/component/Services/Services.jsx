@@ -9,6 +9,9 @@ import Serviceimg4 from "../../assets/ServicesImg/5.avif";
 import Serviceimg5 from "../../assets/ServicesImg/6.avif";
 import Serviceimg6 from "../../assets/ServicesImg/7.avif";
 import Serviceimg7 from "../../assets/ServicesImg/8.avif";
+import Bmi from "../BMI/Bmi";
+import Footer from "../Footer/Footer";
+import LandingNavbar from "../Landing_Page/LandingNavbar";
 const Services = () => {
   const services = [
     {
@@ -62,6 +65,7 @@ const Services = () => {
   ];
 
   return (
+    <>
     <div className="mt-28 w-full h-auto flex items-center justify-center flex-col lg:py-16 md:py-14 sm:py-12 py-10 lg:px-24 md:px-16 sm:px-6 px-4">
       <h6 className="text-lg font-medium text-gray-200 flex items-center gap-x-2 mb-6">
         <BiDumbbell className="w-10 h-10 -rotate-45 text-primary" />
@@ -93,6 +97,8 @@ const Services = () => {
         ))}
       </div>
     </div>
+    <Footer/>
+    </>
   );
 };
 

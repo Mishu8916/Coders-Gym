@@ -13,8 +13,11 @@ import img2 from '../../assets/landing/2.avif';
 import img3 from '../../assets/landing/3.avif';
 import img4 from '../../assets/landing/4.avif';
 import img5 from '../../assets/landing/5.avif';
+import { useNavigate } from 'react-router-dom';
 
 const Hero1 = () => {
+    const navigate = useNavigate();
+
     const swiperData = [
         {
             id: 1,
@@ -42,16 +45,15 @@ const Hero1 = () => {
             bgImg: img4,
             slogan: 'Fuel Your Fitness',
             title: 'Endurance',
-            desc: 'Boost your stamina and achieve your fitness goals with our premium products. ',
+            desc: 'Boost your stamina and achieve your fitness goals with our premium products.',
         },
         {
             id: 5,
             bgImg: img5,
             slogan: 'Power Up Your Life',
             title: 'Energy',
-            desc: 'Stay energized and perform at your best with our top-quality supplements. ',
+            desc: 'Stay energized and perform at your best with our top-quality supplements.',
         },
-
     ];
 
     return (
@@ -80,12 +82,11 @@ const Hero1 = () => {
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
                                 backgroundRepeat: 'no-repeat',
-                              
                             }}
                             className="w-full h-full"
                         >
                             {/* Dark Overlay */}
-                            <div className="absolute inset-0 bg-white/30  dark:bg-black/50 duration-300"></div>
+                            <div className="absolute inset-0 bg-white/30 dark:bg-black/50 duration-300"></div>
 
                             {/* Content */}
                             <div className="absolute top-0 left-0 w-full h-full flex flex-col items-center justify-center text-center px-4 z-10">
@@ -99,9 +100,13 @@ const Hero1 = () => {
                                     {slide.desc}
                                 </p>
 
-                                <button data-aos="fade-up" className="outline-btn mt-10 text-xl dark:text-white ">
-                               Let's Get Started
-                            </button>
+                                <button
+                                    data-aos="fade-up"
+                                    className="outline-btn mt-10 text-xl dark:text-white"
+                                    onClick={() => navigate('/login')}
+                                >
+                                    Let's Get Started
+                                </button>
                             </div>
                         </div>
                     </SwiperSlide>

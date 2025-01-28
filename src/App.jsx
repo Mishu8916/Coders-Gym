@@ -16,8 +16,10 @@ import Login from './component/Login/Login';
 import Login1 from './component/Login/Login1';
 import OTP from './component/Login/Otp';
 import Services from './component/Services/Services';
-import Landing from './component/Landing_Page/Landing';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'; // importing the react router dom
+import Free_Trial_Modal from './component/Landing_Page/Free_Trail_Modal';
+import LabTests from './component/Care/LabTests';
+import MindfulnessLibrary from './component/Mind/MindFulnessLibrary';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 export const App = () => {
   // Updated routing configuration with a default route
@@ -40,8 +42,8 @@ export const App = () => {
       ),
     },
     {
-      path:"/about",
-      element:<About/>
+      path: "/about",
+      element: <About />
     },
     {
       path: "/login",
@@ -60,15 +62,27 @@ export const App = () => {
       element: <Services />,
     },
     {
-      path:"/landing",
-      element:<LandingNavbar/>,
+      path: "/landing",
+      element: <LandingNavbar />,
     },
+    {
+      path: "/free_trail_modal",
+      element: <Free_Trial_Modal />,
+    },
+    {
+      path: "/Labtests",
+      element: <LabTests />,
+    },
+    {
+      path: "/mind",
+      element: <MindfulnessLibrary />,
+    }
   ]);
 
   return (
     <div className="overflow-x-hidden bg-white dark:bg-black dark:text-white text-black">
       <Navbar />
-      <RouterProvider router={router}/>
+      <RouterProvider router={router} />
     </div>
   );
 };

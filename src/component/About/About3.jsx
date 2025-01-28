@@ -1,8 +1,10 @@
 import React from 'react'
 import BannerImg from '../../assets/Home/pushup1.png'
+import { useNavigate } from 'react-router-dom'
 export const About3 = () => {
+      const navigate=useNavigate();
     return (
-        <div className="py-14 dark:bg-black bg-slate-100 duration-300">
+               <div className="py-14 dark:bg-black bg-slate-100 duration-300">
             <div className="container">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 place-items-center">
                     <div data-aos="fade-up">
@@ -30,7 +32,8 @@ export const About3 = () => {
                             <p className="text-xl font-serif dark:text-white" data-aos="fade-up" data-aos-delay="300">
                             Just one small positive thought in the morning can change your whole day.
                             </p>
-                            <button data-aos="fade-up" className="outline-btn">
+                            <button data-aos="fade-up" className="outline-btn dark:text-white"
+                          onClick={()=>navigate('/login')}>
                                 Get Started
                             </button>
                         </div>

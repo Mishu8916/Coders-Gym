@@ -1,7 +1,9 @@
 import React from 'react';
 import BannerImg from '../../assets/Home/yoga.png';
+import { useNavigate } from 'react-router-dom';
 
 export const About2 = () => {
+    const navigate=useNavigate();
     return (
         <div className="py-14 dark:bg-dark bg-slate-100 duration-300">
             <div className="container">
@@ -25,7 +27,8 @@ export const About2 = () => {
                         <p className="text-xl font-serif dark:text-white" data-aos="fade-up" data-aos-delay="300">
                         Discover a place where your fitness aspirations become reality. From strength training to cardio workouts, we provide the tools and expertise you need to sculpt your body, boost your energy, and enhance your overall well-being.
                         </p>
-                        <button data-aos="fade-up" className="outline-btn">
+                        <button data-aos="fade-up" className="outline-btn dark:text-white"
+                        onClick={()=>navigate('/login')}>
                             Get Started
                         </button>
                     </div>

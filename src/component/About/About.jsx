@@ -1,6 +1,9 @@
 import React from 'react'
 import BannerImg from '../../assets/Home/banner1.avif'
+import { useNavigate } from 'react-router-dom';
+
 export const About = () => {
+    const navigate =useNavigate();
     return (
         <div className="py-14 dark:bg-black bg-slate-100 duration-300">
             <div className="container">
@@ -30,7 +33,8 @@ export const About = () => {
                             Our knowledgeable and friendly staff are committed to creating an inclusive and motivating environment.
 
                             </p>
-                            <button data-aos="fade-up" className="outline-btn">
+                            <button data-aos="fade-up" className="outline-btn dark:text-white" 
+                            onClick={()=>navigate('/login')}>
                                 Get Started
                             </button>
                         </div>
