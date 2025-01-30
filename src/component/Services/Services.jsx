@@ -7,9 +7,8 @@ import Serviceimg2 from "../../assets/ServicesImg/3.avif";
 import Serviceimg3 from "../../assets/ServicesImg/4.avif";
 import Serviceimg4 from "../../assets/ServicesImg/5.avif";
 import Serviceimg5 from "../../assets/ServicesImg/6.avif";
-import Serviceimg6 from "../../assets/ServicesImg/7.avif";
+import Serviceimg6 from "../../assets/ServicesImg/7.webp";
 import Serviceimg7 from "../../assets/ServicesImg/8.avif";
-import Bmi from "../BMI/Bmi";
 import Footer from "../Footer/Footer";
 import LandingNavbar from "../Landing_Page/LandingNavbar";
 const Services = () => {
@@ -75,7 +74,7 @@ const Services = () => {
         {services.map((data) => (
           <div
             key={data.id}
-            className="lg:w-[24%] md:w-[48%] sm:w-[48%] w-full lg:h-[50vh] md:h-[53vh] sm:h-[58vh] h-[60vh] rounded-xl relative overflow-hidden cursor-pointer group hover:-translate-y-2 ease-out duration-500"
+            className="lg:w-[24%] md:w-[48%] sm:w-[48%] w-full lg:h-[50vh] md:h-[53vh] sm:h-[58vh] h-[60vh] rounded-xl relative overflow-hidden cursor-pointer group hover:-translate-y-2 ease-out duration-500 shadow-lg hover:shadow-primary"
           >
             {/* Image */}
             <img

@@ -14,11 +14,13 @@ import Footer from './component/Footer/Footer';
 import Bmi from './component/BMI/Bmi';
 import Login from './component/Login/Login';
 import Login1 from './component/Login/Login1';
-import OTP from './component/Login/Otp';
+import OTP from './component/Login/OTP';
 import Services from './component/Services/Services';
 import Free_Trial_Modal from './component/Landing_Page/Free_Trail_Modal';
 import LabTests from './component/Care/LabTests';
 import MindfulnessLibrary from './component/Mind/MindFulnessLibrary';
+import Fitness from './component/Fitness/Fitness';
+import ContactUsForm from './component/Contact/ContactUsForm';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 export const App = () => {
@@ -76,6 +78,14 @@ export const App = () => {
     {
       path: "/mind",
       element: <MindfulnessLibrary />,
+    },
+    {
+      path:"/fit",
+      element:<Fitness/>,
+    },
+    {
+      path:"/contact_us",
+      element:<ContactUsForm/>,
     }
   ]);
 
