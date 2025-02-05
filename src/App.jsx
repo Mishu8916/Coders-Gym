@@ -13,8 +13,7 @@ import Testimonials from './component/Testimonial/Testimonials';
 import Footer from './component/Footer/Footer';
 import Bmi from './component/BMI/Bmi';
 import Register from './component/Register/Register';
-// import Login from './component/Login/Login';
-import Login1 from './component/Login/Login1';
+import Login from './component/Login/Login';
 import OTP from './component/Login/OTP';
 import Services from './component/Services/Services';
 import Free_Trial_Modal from './component/Landing_Page/Free_Trail_Modal';
@@ -54,8 +53,8 @@ export const App = () => {
       element: <Register />,
     },
     {
-      path: "/login1",
-      element: <Login1 />,
+      path: "/login",
+      element: <Login />,
     },
     {
       path: "/otp",

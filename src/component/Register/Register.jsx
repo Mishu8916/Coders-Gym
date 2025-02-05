@@ -1,100 +1,90 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Logo from "../../assets/Home/logo.png";
 import { FaDumbbell } from "react-icons/fa";
 import { Eye, EyeOff } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 const Register = () => {
-  const [showPassword, setShowPassword] = useState(false);
-  const [formData, setFormData] = useState({email: "",password: "", });
-  const [otp, setOtp] = useState(new Array(6).fill(""));
-  // const [setIsOtpSent,setIsOtpSent]=useState(false);
-  const [errors,setErrors] =useState({});
-  // const[loading,setloading]=useState(false);
-
   const [isOpen] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailVerified, setEmailVerified] = useState(false);
+  const [otp, setOtp] = useState(new Array(6).fill(""));
   const [timer, setTimer] = useState(15);
   const [isResendDisabled, setIsResendDisabled] = useState(false);
   const [isOtpVisible, setIsOtpVisible] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  // Optionally store tokens if you plan to use them after registration
+  const [tokens, setTokens] = useState(null);
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      const formDataToSend = new FormData();
-      formDataToSend.append("email", formData.email);
-      formDataToSend.append("password", formData.password);
+  // Prevent background scrolling when modal is open
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "auto";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
 
-
-      try {
-        const response = await axios.post(
-          "http://127.0.0.1:8000/api/register/",
-          formDataToSend,
-          { headers: { "Content-Type": "multipart/form-data" } }
-        );
-
-        alert(response.data.message);
-        setIsOtpSent(true); // Proceed to OTP step
-      } catch (error) {
-        console.error("Error Response:", error);
-        handleApiErrors(error);
-      }
-    }
-  };
-
-  const handleOtpSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        "http://127.0.0.1:8000/api/verify-otp/",
-        { email: formData.email, otp }
-      );
-
-      alert(response.data.message);
-      navigate("/Register"); // Redirect to profile
-    } catch (error) {
-      handleApiErrors(error);
-    }
-  };
-
-  const handleApiErrors = (error) => {
-    if (error.response ) {
-      console.error("Error Data:", error.response.data);
-      alert(error.response.data.message || "An error occurred.");
-    } else if (error.request) {
-      console.error("No Response Received:", error.request);
-      alert("No response received from the server.");
+  // Countdown timer for OTP resend
+  useEffect(() => {
+    let interval = null;
+    if (timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
     } else {
-      console.error("Error Message:", error.message);
-      alert("An unexpected error occurred.");
+      setIsResendDisabled(false);
+      if (interval) clearInterval(interval);
     }
-  };
+    return () => clearInterval(interval);
+  }, [timer]);
 
-
- // Close modal
-  const closeModal = () => navigate(-1);
-
+  // Simple email and password validations
   const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const isValidPassword = password.length >= 6;
 
-  // Handle email verification (send OTP)
+  // API call to register the user and send OTP
   const handleEmailVerification = async () => {
-    if (!isValidEmail) {
-      alert("Please enter a valid email to send OTP.");
+    if (!isValidEmail || !isValidPassword) {
+      alert("Please enter a valid email and a password with at least 6 characters.");
       return;
     }
-    setLoading(true);
-    await sendOTP(email, password);
-    setLoading(false);
+    // Prepare the payload. Note: Adjust according to your API expectations.
+    const payload = {
+      email,
+      password,
+    };
+
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/register/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        // Registration successful, OTP sent
+        setEmailVerified(true);
+        setTokens({
+          access: data.access,
+          refresh: data.refresh,
+        });
+        alert("OTP sent to " + email);
+      } else {
+        // Display error message returned from API
+        alert(data.error || "Registration failed. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+      alert("An error occurred. Please try again later.");
+    }
   };
 
-  // Handle OTP input changes
+  // Handle individual OTP input change and auto-focus on the next input
   const handleOtpChange = (element, index) => {
     if (isNaN(element.value)) return;
     const newOtp = [...otp];
@@ -105,33 +95,73 @@ const Register = () => {
     }
   };
 
-  // Handle OTP verification
+  // API call to verify the OTP
   const handleOtpVerification = async () => {
-    setLoading(true);
-    await verifyOTP(email, otp.join(""));
-    setLoading(false);
+    const enteredOtp = otp.join("");
+    if (enteredOtp.length !== 6) {
+      alert("Please enter the complete 6-digit OTP.");
+      return;
+    }
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/verify-otp/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, otp: enteredOtp }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        setOtpVerified(true);
+        alert("OTP verified successfully!");
+      } else {
+        alert(data.error || "Invalid OTP. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error during OTP verification:", error);
+      alert("An error occurred while verifying OTP. Please try again later.");
+    }
   };
 
-  // Handle OTP resend
+  // API call to resend OTP
   const handleResend = async () => {
-    setLoading(true);
-    await resendOTP(email);
-    setLoading(false);
+    setTimer(30);
+    setIsResendDisabled(true);
+    setOtp(new Array(6).fill("")); // Clear OTP inputs
+    try {
+      const response = await fetch("http://127.0.0.1:8000/api/resend-otp/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert("New OTP sent to " + email);
+      } else {
+        alert(data.error || "Failed to send OTP.");
+      }
+    } catch (error) {
+      console.error("Error during resending OTP:", error);
+      alert("An error occurred while resending OTP. Please try again later.");
+    }
   };
 
-  // Handle final registration
+  // Final registration step (optional if registration was completed in handleEmailVerification)
   const handleRegister = () => {
     if (!otpVerified) {
       alert("Please verify the OTP before registering.");
       return;
     }
     alert("Successfully Registered!");
+    // Redirect to login page after a short delay
     setTimeout(() => {
-      navigate("/login1");
+      navigate("/login");
     }, 1500);
   };
 
-  if (!isOpen) return null;
+  const closeModal = () => navigate(-1);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 backdrop-blur-sm">
@@ -161,19 +191,6 @@ const Register = () => {
             onChange={(e) => setEmail(e.target.value)}
             className="w-full dark:text-black p-3 border rounded-lg focus:outline-none focus:ring-0 hover:border-primary"
           />
-          {!isValidEmail && email && (
-            <p className="text-red-500 text-sm mt-1">Enter a valid email</p>
-          )}
-          {!emailVerified ? (
-            <p
-              className="text-primary text-center text-sm mt-2 cursor-pointer hover:underline"
-              onClick={handleEmailVerification}
-            >
-              Verify Email & Send OTP
-            </p>
-          ) : (
-            <p className="dark:text-primary text-black text-sm mt-2">OTP sent to your email</p>
-          )}
         </div>
 
         {/* OTP Section */}
@@ -206,7 +223,7 @@ const Register = () => {
                 Verify OTP
               </button>
             ) : (
-              <p className="text-primary text-center mb-2">OTP Verified!</p>
+              <p className="text-green-600 text-center mb-2">OTP Verified!</p>
             )}
             <div className="text-center mt-4">
               {timer > 0 ? (
@@ -216,9 +233,8 @@ const Register = () => {
               ) : (
                 <button
                   onClick={handleResend}
-                  className={`text-red-800 font-serif hover:underline ${
-                    isResendDisabled ? "cursor-not-allowed" : ""
-                  }`}
+                  className={`text-red-800 font-serif hover:underline ${isResendDisabled ? "cursor-not-allowed" : ""
+                    }`}
                   disabled={isResendDisabled}
                 >
                   Resend OTP
@@ -239,15 +255,29 @@ const Register = () => {
             className="w-full dark:text-black p-3 border rounded-lg focus:outline-none focus:ring-0 hover:border-primary"
           />
           <span
-            className="absolute inset-y-0 right-3 flex items-center cursor-pointer dark:text-black"
+            className="absolute right-3 top-1/3 transform -translate-y-1/2 flex items-center cursor-pointer dark:text-black"
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? <EyeOff size={24} /> : <Eye size={24} />}
           </span>
+
           {!isValidPassword && password && (
             <p className="text-red-500 text-sm mt-1">
               Password must be at least 6 characters
             </p>
+          )}
+          {!isValidEmail && email && (
+            <p className="text-red-500 text-sm mt-1">Enter a valid email</p>
+          )}
+          {!emailVerified ? (
+            <p
+              className="text-primary text-center font-serif text-sm mt-3 cursor-pointer hover:underline"
+              onClick={handleEmailVerification}
+            >
+              Verify Email &amp; Send OTP
+            </p>
+          ) : (
+            <p className="text-green-600 text-sm mt-2">OTP sent to your email</p>
           )}
         </div>
 
@@ -255,18 +285,17 @@ const Register = () => {
         <button
           onClick={handleRegister}
           disabled={!isValidEmail || !isValidPassword || !otpVerified}
-          className={`w-full py-3 rounded-lg transition ${
-            isValidEmail && isValidPassword && otpVerified
+          className={`w-full py-3 -mt-2 rounded-lg transition ${isValidEmail && isValidPassword && otpVerified
               ? "bg-blue-600 text-white hover:bg-blue-500"
               : "bg-gray-400 text-white cursor-not-allowed"
-          }`}
+            }`}
         >
           Register
         </button>
 
         <p
-          className="text-blue-500 text-sm text-center mt-4 cursor-pointer hover:underline"
-          onClick={() => navigate("/login1")}
+          className="text-blue-500 text-sm font-serif text-center mt-4 cursor-pointer hover:underline"
+          onClick={() => navigate("/login")}
         >
           Already a user?
         </p>
