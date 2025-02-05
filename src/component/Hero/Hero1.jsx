@@ -103,7 +103,7 @@ const Hero1 = () => {
                                 <button
                                     data-aos="fade-up"
                                     className="outline-btn mt-10 text-xl dark:text-white"
-                                    onClick={() => navigate('/login')}
+                                    onClick={() => navigate('/register')}
                                 >
                                     Let's Get Started
                                 </button>

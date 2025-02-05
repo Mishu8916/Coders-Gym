@@ -28,7 +28,7 @@ export const About2 = () => {
                         Discover a place where your fitness aspirations become reality. From strength training to cardio workouts, we provide the tools and expertise you need to sculpt your body, boost your energy, and enhance your overall well-being.
                         </p>
                         <button data-aos="fade-up" className="outline-btn dark:text-white"
-                        onClick={()=>navigate('/login')}>
+                        onClick={()=>navigate('/register')}>
                             Get Started
                         </button>
                     </div>

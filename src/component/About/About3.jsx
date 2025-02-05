@@ -33,7 +33,7 @@ export const About3 = () => {
                             Just one small positive thought in the morning can change your whole day.
                             </p>
                             <button data-aos="fade-up" className="outline-btn dark:text-white"
-                          onClick={()=>navigate('/login')}>
+                          onClick={()=>navigate('/register')}>
                                 Get Started
                             </button>
                         </div>

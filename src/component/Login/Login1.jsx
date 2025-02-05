@@ -3,10 +3,13 @@ import Logo from "../../assets/Home/logo.png";
 import { FaDumbbell } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const Login1 = () => {
   const [isOpen, setIsOpen] = useState(true);
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,7 +28,7 @@ const Login1 = () => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 backdrop-blur-sm">
       <div className="relative bg-white dark:bg-dark p-8 rounded-lg shadow-lg w-[90%] sm:w-[80%] md:w-[60%] lg:w-[40%] max-w-md overflow-y-auto max-h-[90vh]">
-        
+
         <button
           onClick={() => navigate(-1)}
           className="absolute top-2 left-2 flex items-center gap-2 text-lg bg-white dark:bg-dark dark:text-white px-3 py-2 rounded-lg"
@@ -44,7 +47,7 @@ const Login1 = () => {
           <img src={Logo} alt="not found" className="h-16" />
         </div>
 
-        <div className="mb-6">
+        <div className="mb-4">
           <label
             htmlFor="email"
             className="font-serif bg-white dark:bg-dark dark:text-white text-lg mb-2 text-center flex items-center justify-center gap-2"
@@ -66,29 +69,34 @@ const Login1 = () => {
           </div>
         </div>
 
+        <div className="mb-6">
+          <div className="flex items-center border hover:border-primary focus:border-primary rounded-lg bg-white dark:bg-dark dark:text-white overflow-hidden">
+            <input
+              type={showPassword ? "text" : "password"}
+              id="password"
+              placeholder="Password"
+              className="flex-1 p-3 bg-white dark:bg-dark focus:outline-none focus:ring-0"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="p-3 dark:text-white"
+            >
+              {showPassword ? <AiOutlineEyeInvisible /> : <AiOutlineEye />}
+            </button>
+          </div>
+        </div>
+
         <div>
           <button
             onClick={() => navigate("/otp")}
-            disabled={!email.trim()}
-            className={`w-full py-3 rounded-lg transition ${
-              email.trim() ? "bg-blue-600 text-white hover:bg-blue-500" :  "bg-blue-600 text-white font-serif text-lg rounded-lg cursor-not-allowed"
-            }`}
+            disabled={!email.trim() || !password.trim()}
+            className={`w-full py-3 rounded-lg transition ${email.trim() && password.trim() ? "bg-blue-600 text-white hover:bg-blue-500" : "bg-blue-600 text-white font-serif text-lg rounded-lg cursor-not-allowed"}`}
           >
             Continue
           </button>
-        </div>
-
-        <div className="flex justify-center gap-6 mt-4">
-          <div className="flex items-center gap-2 border hover:border-primary p-3 rounded-lg bg-light dark:bg-dark">
-            <p className="dark:text-white font-serif">or connect with</p>
-            <button className="bg-dark hover:bg-primary p-3 rounded-full">
-              <img
-                src="https://img.icons8.com/ios-filled/24/ffffff/google-logo.png"
-                alt="Google"
-                className="h-6 w-6"
-              />
-            </button>
-          </div>
         </div>
 
         <p className="text-xs text-center text-gray-600 mt-6">

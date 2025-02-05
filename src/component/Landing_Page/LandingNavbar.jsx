@@ -10,7 +10,7 @@ export const LandingNavbar = () => {
   const Navlinks = [
     { id: 1, name: "HOME", link: "/" },
     { id: 2, name: "SERVICES", link: "/services" },
-    { id: 3, icon: <FaUser />, link: "/" }, //profile's page navigation
+    { id: 3, icon: <FaUser />, link: "/profile" }, //profile's page navigation
   ];
   const SecondaryLinks = [
     { id: 4, name: "FITNESS", link: "/fit" },

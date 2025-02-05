@@ -9,7 +9,7 @@ export const Navbar = () => {
   const Navlinks = [
     { id: 1, name: "HOME", link: "/" },
     { id: 2, name: "SERVCES", link: "/services" },
-    { id: 3, name: "JOIN", link: "/login" },
+    { id: 3, name: "JOIN", link: "/register" },
   ];
 
   return (

@@ -12,7 +12,8 @@ import AppStoreBanner from './component/AppStoreBanner/AppStoreBanner';
 import Testimonials from './component/Testimonial/Testimonials';
 import Footer from './component/Footer/Footer';
 import Bmi from './component/BMI/Bmi';
-import Login from './component/Login/Login';
+import Register from './component/Register/Register';
+// import Login from './component/Login/Login';
 import Login1 from './component/Login/Login1';
 import OTP from './component/Login/OTP';
 import Services from './component/Services/Services';
@@ -21,6 +22,7 @@ import LabTests from './component/Care/LabTests';
 import MindfulnessLibrary from './component/Mind/MindFulnessLibrary';
 import Fitness from './component/Fitness/Fitness';
 import ContactUsForm from './component/Contact/ContactUsForm';
+import Profile from'./component/Profile/Profile'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 export const App = () => {
@@ -48,8 +50,8 @@ export const App = () => {
       element: <About />
     },
     {
-      path: "/login",
-      element: <Login />,
+      path: "/register",
+      element: <Register />,
     },
     {
       path: "/login1",
@@ -86,8 +88,12 @@ export const App = () => {
     {
       path:"/contact_us",
       element:<ContactUsForm/>,
-    }
-  ]);
+    },
+    {
+      path:"/profile",
+      element:<Profile/>,
+    },
+     ]);
 
   return (
     <div className="overflow-x-hidden bg-white dark:bg-black dark:text-white text-black">

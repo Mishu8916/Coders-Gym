@@ -34,7 +34,7 @@ export const About = () => {
 
                             </p>
                             <button data-aos="fade-up" className="outline-btn dark:text-white" 
-                            onClick={()=>navigate('/login')}>
+                            onClick={()=>navigate('/register')}>
                                 Get Started
                             </button>
                         </div>
