@@ -58,7 +58,7 @@ const Register = () => {
     };
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/register/", {
+      const response = await fetch("http://127.0.0.1:8000/register-api/register/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -103,7 +103,7 @@ const Register = () => {
       return;
     }
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/verify-otp/", {
+      const response = await fetch("http://127.0.0.1:8000/register-api/verify-otp/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -129,7 +129,7 @@ const Register = () => {
     setIsResendDisabled(true);
     setOtp(new Array(6).fill("")); // Clear OTP inputs
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/resend-otp/", {
+      const response = await fetch("http://127.0.0.1:8000/register-api/resend-otp/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

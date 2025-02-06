@@ -22,6 +22,7 @@ import MindfulnessLibrary from './component/Mind/MindFulnessLibrary';
 import Fitness from './component/Fitness/Fitness';
 import ContactUsForm from './component/Contact/ContactUsForm';
 import Profile from'./component/Profile/Profile'
+import ForgotPassword from './component/Forgot_Password/forgotpassword';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 export const App = () => {
@@ -91,6 +92,10 @@ export const App = () => {
     {
       path:"/profile",
       element:<Profile/>,
+    },
+    {
+      path:"/forgotpassword",
+      element:<ForgotPassword/>,
     },
      ]);
 
