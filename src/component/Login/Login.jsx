@@ -137,13 +137,11 @@ const Login = () => {
     setLoading(false);
   };
 
-
-
+  // Forgot password handler (placeholder)
   const handleForgotPassword = () => {
     if (validateEmail(email)) {
       setMessage("Password reset link has been sent to your email.");
       // Optionally, add API integration for password reset
-      navigate("/forgotpassword");
     } else {
       setMessage("Please enter a valid email to receive the reset link.");
     }
@@ -232,10 +230,11 @@ const Login = () => {
               <button
                 onClick={handleContinue}
                 disabled={loading || !email.trim() || !password.trim() || emailError}
-                className={`w-full py-3 rounded-lg transition ${email.trim() && password.trim() && !emailError
-                  ? "bg-blue-600 text-white hover:bg-blue-500"
-                  : "bg-blue-600 text-white font-serif text-lg rounded-lg cursor-not-allowed"
-                  }`}
+                className={`w-full py-3 rounded-lg transition ${
+                  email.trim() && password.trim() && !emailError
+                    ? "bg-blue-600 text-white hover:bg-blue-500"
+                    : "bg-blue-600 text-white font-serif text-lg rounded-lg cursor-not-allowed"
+                }`}
               >
                 {loading ? "Sending OTP..." : "Continue"}
               </button>
@@ -266,10 +265,11 @@ const Login = () => {
               <button
                 onClick={handleVerifyOtp}
                 disabled={loading}
-                className={`w-full py-3 rounded-lg transition ${otp.join("").length === 6
-                  ? "bg-green-600 text-white hover:bg-green-500"
-                  : "bg-green-600 text-white font-serif text-lg rounded-lg cursor-not-allowed"
-                  }`}
+                className={`w-full py-3 rounded-lg transition ${
+                  otp.join("").length === 6
+                    ? "bg-green-600 text-white hover:bg-green-500"
+                    : "bg-green-600 text-white font-serif text-lg rounded-lg cursor-not-allowed"
+                }`}
               >
                 {loading ? "Verifying OTP..." : "Verify OTP"}
               </button>

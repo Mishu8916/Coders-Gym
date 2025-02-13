@@ -10,7 +10,7 @@ import Serviceimg5 from "../../assets/ServicesImg/6.avif";
 import Serviceimg6 from "../../assets/ServicesImg/7.webp";
 import Serviceimg7 from "../../assets/ServicesImg/8.avif";
 import Footer from "../Footer/Footer";
-import LandingNavbar from "../Landing_Page/LandingNavbar";
+
 const Services = () => {
   const services = [
     {
@@ -90,7 +90,7 @@ const Services = () => {
               </div>
               <h1 className="text-xl text-white font-semibold">{data.title}</h1>
               <h1 className="text-lg text-white font-semibold">{data.desc}</h1>
-              <TertiaryLink link={data.link}>Read More</TertiaryLink>
+              <TertiaryLink link={'/blogpage'}>Read More</TertiaryLink>
             </div>
           </div>
         ))}

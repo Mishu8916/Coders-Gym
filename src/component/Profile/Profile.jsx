@@ -84,7 +84,7 @@ const ProfilePage = () => {
         <nav className="mt-6 space-y-4">
           <MenuItem icon={<FiShoppingCart />} label="Orders" onClick={() => handleNavigation("/services")} />
           <MenuItem icon={<MdOutlineMedicalServices />} label="Medical Records" onClick={() => handleNavigation("/Labtests")} />
-          <MenuItem icon={<FiUser />} label="Active Packs & Subscription" onClick={() => handleNavigation("/subscriptions")} />
+          <MenuItem icon={<FiUser />} label="Your Workout plans" onClick={() => handleNavigation("/todolist")} />
           <MenuItem icon={<HiOutlineTicket />} label="Redeem Voucher" onClick={() => handleNavigation("/redeem-voucher")} />
           <MenuItem icon={<IoMdMail />} label="Support" onClick={() => handleNavigation("/support")} />
           <MenuItem icon={<FiLogOut />} label="Logout" onClick={() => handleNavigation("/logout")} />

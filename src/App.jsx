@@ -23,9 +23,14 @@ import Fitness from './component/Fitness/Fitness';
 import ContactUsForm from './component/Contact/ContactUsForm';
 import Profile from'./component/Profile/Profile'
 import ForgotPassword from './component/Forgot_Password/forgotpassword';
+import BlogPage from './component/Blog/BlogPage';
+import GymToDoList from './component/Task/GymToDoList';
+import HealthCheckup from './component/Care/HealthCheckup';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+
 export const App = () => {
+  
   // Updated routing configuration with a default route
   const router = createBrowserRouter([
     {
@@ -97,6 +102,19 @@ export const App = () => {
       path:"/forgotpassword",
       element:<ForgotPassword/>,
     },
+    {
+      path:"/blogpage",
+      element:<BlogPage/>
+    },
+    {
+      path:"/todolist",
+      element:<GymToDoList/>
+    },
+    {
+      path: "/healthcheckup/:id",
+      element: <HealthCheckup />, 
+    },
+
      ]);
 
   return (

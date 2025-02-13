@@ -1,4 +1,6 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+
 import { FaUser, FaCapsules, FaShieldAlt, FaMale, FaFemale, FaHeartbeat, FaChild, FaCheckCircle, FaPrescriptionBottleAlt, FaHandHoldingHeart, FaRunning, FaVial, FaStethoscope, FaLeaf, FaBone, FaWeight, FaTint } from "react-icons/fa"; // Importing icons from react-icons
 
 const labTestsData = [
@@ -8,7 +10,7 @@ const labTestsData = [
   { id: 4, name: "Fitness Essentials - Men", originalPrice: 2990, offerPrice: 1990, bgColor: "bg-yellow-200", Icon: FaMale },
   { id: 5, name: "Fitness Essentials - Women", originalPrice: 2990, offerPrice: 1990, bgColor: "bg-orange-200", Icon: FaFemale },
   { id: 6, name: "Sr.Citizen Advance Package - male", originalPrice: 5999, offerPrice: 2990, bgColor: "bg-teal-200", Icon: FaMale },
-  { id: 7, name: "Sr.Citizen Advance Package - female", originalPrice: 5990, offerPrice: 2990, bgColor: "bg-red-200", Icon: FaFemale },
+    { id: 7, name: "Sr.Citizen Advance Package - female", originalPrice: 5990, offerPrice: 2990, bgColor: "bg-red-200", Icon: FaFemale },
   { id: 8, name: "Iron Screening", originalPrice: 990, offerPrice: 690, bgColor: "bg-lime-200", Icon: FaHeartbeat },
   { id: 9, name: "Women Health", originalPrice: 3490, offerPrice: 1690, bgColor: "bg-emerald-200", Icon: FaChild },
   { id: 10, name: "PCOD Profile", originalPrice: 2990, offerPrice: 999, bgColor: "bg-cyan-200", Icon: FaCheckCircle },
@@ -21,12 +23,13 @@ const labTestsData = [
   { id: 17, name: "Bone Test", originalPrice: 1490, offerPrice: 990, bgColor: "bg-gray-200", Icon: FaBone },
   { id: 18, name: "Liver Test", originalPrice: 790, offerPrice: 590, bgColor: "bg-purple-200", Icon: FaWeight },
   { id: 19, name: "Obesity", originalPrice: 990, offerPrice: 590, bgColor: "bg-red-200", Icon: FaTint },
-  { id: 20, name: "Anemia", originalPrice: 790, offerPrice: 490, bgColor: "bg-gray-200", Icon: FaPrescriptionBottleAlt},
+  { id: 20, name: "Anemia", originalPrice: 790, offerPrice: 490, bgColor: "bg-gray-200", Icon: FaPrescriptionBottleAlt },
 
 
 ];
 
 const LabTests = () => {
+  const navigate = useNavigate();
   return (
     <div className="w-full min-h-screen dark:bg-black flex flex-col items-center py-10 px-6 mt-28">
       <h1 className="text-4xl font-bold dark:text-white mb-4 font-serif">Lab <span className="text-primary">Tests</span></h1>
@@ -37,8 +40,9 @@ const LabTests = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 w-full max-w-7xl h-auto">
         {labTestsData.map((test) => (
           <div
-            key={test.id}
-            className={`relative p-6 rounded-lg shadow-lg ${test.bgColor} flex flex-col items-center h-72 transform transition duration-300 hover:scale-105 hover:shadow-2xl shadow-lg shadow-primary`}
+          onClick={() => navigate(`/healthcheckup/${test.id}`)}
+
+            className={`relative p-6 rounded-lg shadow-lg ${test.bgColor} flex flex-col items-center h-72 transform transition duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer`}
           >
             {/* Background Icon */}
             <div className="absolute inset-0 opacity-10 flex items-center justify-center">
