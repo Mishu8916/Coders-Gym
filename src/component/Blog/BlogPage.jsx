@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { FaSearch } from "react-icons/fa";
 import img1 from "../../assets/blog/fitn.avif";
 import img2 from "../../assets/blog/yoga.avif";
@@ -21,26 +22,26 @@ const sections = [
 ];
 
 const content = {
-    fitness: "Fitness isn’t just about looking good – it’s about feeling good and maintaining a balanced lifestyle. Regular physical activity has numerous benefits, including enhanced mood, increased energy levels, and a lower risk of chronic diseases like heart disease, diabetes, and obesity. A good fitness regimen incorporates both aerobic exercises, which improve cardiovascular health, and strength training exercises, which build muscle mass and increase metabolism. Fitness is for everyone, regardless of age or fitness level. Starting with small, achievable goals can help make fitness a sustainable and enjoyable part of your daily routine.\n\n" +
+    fitness: "Fitness isn't just about looking good – it's about feeling good and maintaining a balanced lifestyle. Regular physical activity has numerous benefits, including enhanced mood, increased energy levels, and a lower risk of chronic diseases like heart disease, diabetes, and obesity. A good fitness regimen incorporates both aerobic exercises, which improve cardiovascular health, and strength training exercises, which build muscle mass and increase metabolism. Fitness is for everyone, regardless of age or fitness level. Starting with small, achievable goals can help make fitness a sustainable and enjoyable part of your daily routine.\n\n" +
              "Key Tips for Fitness:\n" +
              "- Start with a warm-up and cool-down to prevent injuries.\n" +
              "- Include both cardio and strength exercises in your routine.\n" +
              "- Stay consistent, but listen to your body and allow for rest and recovery.\n" +
              "- Stay hydrated and fuel your body with a balanced diet.",
 
-    yoga: "Yoga is more than just a physical workout – it’s a holistic practice that combines breathwork, movement, and meditation to create balance in both body and mind. There are many types of yoga, ranging from gentle styles like Hatha and Yin Yoga to more vigorous practices like Vinyasa and Ashtanga. Yoga’s emphasis on mindfulness helps reduce stress, promote mental clarity, and improve overall well-being. It’s also an excellent way to improve flexibility and strength while fostering inner peace.\n\n" +
+    yoga: "Yoga is more than just a physical workout – it's a holistic practice that combines breathwork, movement, and meditation to create balance in both body and mind. There are many types of yoga, ranging from gentle styles like Hatha and Yin Yoga to more vigorous practices like Vinyasa and Ashtanga. Yoga's emphasis on mindfulness helps reduce stress, promote mental clarity, and improve overall well-being. It's also an excellent way to improve flexibility and strength while fostering inner peace.\n\n" +
           "Benefits of Yoga:\n" +
           "- Enhances flexibility and joint mobility.\n" +
           "- Reduces stress and anxiety through mindfulness and relaxation.\n" +
           "- Improves posture and core strength.\n" +
           "- Promotes better sleep and mental clarity.",
 
-    gym: "The gym is a hub for a wide variety of fitness activities, from cardiovascular exercises on treadmills and stationary bikes to strength training with dumbbells, barbells, and resistance machines. Many gyms also offer group classes such as spinning, yoga, or high-intensity interval training (HIIT). Whether you’re looking to lose weight, build muscle, or just stay active, a gym provides all the resources you need. The environment also encourages social interaction and motivation, making it easier to stay committed to your fitness goals.\n\n" +
+    gym: "The gym is a hub for a wide variety of fitness activities, from cardiovascular exercises on treadmills and stationary bikes to strength training with dumbbells, barbells, and resistance machines. Many gyms also offer group classes such as spinning, yoga, or high-intensity interval training (HIIT). Whether you're looking to lose weight, build muscle, or just stay active, a gym provides all the resources you need. The environment also encourages social interaction and motivation, making it easier to stay committed to your fitness goals.\n\n" +
          "Tips for a Successful Gym Experience:\n" +
          "- Set clear fitness goals (strength, weight loss, endurance, etc.).\n" +
          "- Start with exercises that match your current fitness level and progress over time.\n" +
-         "- Work with a trainer if you’re new to using gym equipment or need guidance.\n" +
-         "- Don’t forget to stretch before and after your workouts.",
+         "- Work with a trainer if you're new to using gym equipment or need guidance.\n" +
+         "- Don't forget to stretch before and after your workouts.",
 
     aerobics: "Aerobic exercise, also known as cardio, involves continuous and rhythmic movements that increase your heart rate and improve cardiovascular health. Aerobics can include activities like running, cycling, swimming, dancing, or even hiking. These exercises are perfect for burning calories, improving endurance, and keeping your heart healthy. They also help reduce stress, improve mood, and boost overall stamina. Aerobics can be done solo or in a group setting, with classes often incorporating fun music and choreographed routines.\n\n" +
               "Aerobics for Better Health:\n" +
@@ -49,21 +50,21 @@ const content = {
               "- Reduces the risk of chronic conditions like hypertension and diabetes.\n" +
               "- Increases endurance and stamina over time.",
 
-    boxing: "Boxing isn’t just a sport; it’s an excellent full-body workout. It requires strength, endurance, speed, and mental focus. Boxing improves cardiovascular health, tones muscles, and increases overall fitness. In addition to physical benefits, boxing also teaches discipline, perseverance, and mental resilience. It’s a fantastic stress reliever – the combination of punching and footwork allows you to channel energy into each movement. Boxing workouts typically include shadow boxing, bag work, and sparring, along with strength and conditioning exercises.\n\n" +
+    boxing: "Boxing isn't just a sport; it's an excellent full-body workout. It requires strength, endurance, speed, and mental focus. Boxing improves cardiovascular health, tones muscles, and increases overall fitness. In addition to physical benefits, boxing also teaches discipline, perseverance, and mental resilience. It's a fantastic stress reliever – the combination of punching and footwork allows you to channel energy into each movement. Boxing workouts typically include shadow boxing, bag work, and sparring, along with strength and conditioning exercises.\n\n" +
             "Why Try Boxing:\n" +
             "- Provides a total-body workout that improves strength, endurance, and agility.\n" +
             "- Helps relieve stress and improve focus.\n" +
             "- Builds confidence and mental toughness.\n" +
             "- Can aid in weight loss by burning calories and toning muscles.",
 
-    cycling: "Cycling is one of the most popular forms of low-impact cardiovascular exercise. It can be done outdoors on a bike trail or road, or indoors using a stationary bike. Cycling improves cardiovascular health, strengthens leg muscles, and can help with weight loss. Whether you cycle for fun or as a serious workout, it’s a fantastic way to stay active while enjoying the outdoors. Group cycling classes or spinning classes at the gym provide an added element of motivation with instructors guiding you through different cycling intensities.\n\n" +
+    cycling: "Cycling is one of the most popular forms of low-impact cardiovascular exercise. It can be done outdoors on a bike trail or road, or indoors using a stationary bike. Cycling improves cardiovascular health, strengthens leg muscles, and can help with weight loss. Whether you cycle for fun or as a serious workout, it's a fantastic way to stay active while enjoying the outdoors. Group cycling classes or spinning classes at the gym provide an added element of motivation with instructors guiding you through different cycling intensities.\n\n" +
              "Benefits of Cycling:\n" +
-             "- Low-impact exercise that’s easy on the joints.\n" +
+             "- Low-impact exercise that's easy on the joints.\n" +
              "- Boosts cardiovascular fitness and leg strength.\n" +
              "- Great for weight loss and improving endurance.\n" +
              "- Can be done indoors or outdoors for variety.",
 
-    "weight lifting": "Weight lifting, also known as strength training, is the practice of lifting weights to increase muscle mass and improve strength. This type of exercise helps to build muscle, enhance metabolism, and improve bone density. Weight lifting isn’t just for bodybuilders – it’s beneficial for anyone looking to improve their overall fitness. Lifting weights helps prevent muscle loss as you age, increases functional strength, and supports weight management. Incorporating both compound movements (like squats and deadlifts) and isolation exercises (like bicep curls and triceps extensions) can create a balanced routine.\n\n" +
+    "weight lifting": "Weight lifting, also known as strength training, is the practice of lifting weights to increase muscle mass and improve strength. This type of exercise helps to build muscle, enhance metabolism, and improve bone density. Weight lifting isn't just for bodybuilders – it's beneficial for anyone looking to improve their overall fitness. Lifting weights helps prevent muscle loss as you age, increases functional strength, and supports weight management. Incorporating both compound movements (like squats and deadlifts) and isolation exercises (like bicep curls and triceps extensions) can create a balanced routine.\n\n" +
                       "Key Advantages of Weight Lifting:\n" +
                       "- Builds lean muscle mass and burns fat.\n" +
                       "- Boosts metabolism and increases strength.\n" +
@@ -82,6 +83,18 @@ const content = {
 const BlogPage = () => {
     const [search, setSearch] = useState("");
     const sectionRefs = useRef({});
+    const location = useLocation();
+
+    useEffect(() => {
+        // Get the section ID from the URL hash
+        const sectionId = location.hash.replace('#', '');
+        if (sectionId && sectionRefs.current[sectionId]) {
+            // Add a small delay to ensure the page is fully loaded
+            setTimeout(() => {
+                sectionRefs.current[sectionId].scrollIntoView({ behavior: "smooth" });
+            }, 100);
+        }
+    }, [location]);
 
     const handleSearch = () => {
         const searchKey = search.toLowerCase();
@@ -89,21 +102,21 @@ const BlogPage = () => {
             section.title.toLowerCase().includes(searchKey)
         );
 
-        if (foundSection && sectionRefs.current[foundSection.title]) {
-            sectionRefs.current[foundSection.title].scrollIntoView({ behavior: "smooth" });
+        if (foundSection && sectionRefs.current[foundSection.title.toLowerCase()]) {
+            sectionRefs.current[foundSection.title.toLowerCase()].scrollIntoView({ behavior: "smooth" });
         }
     };
 
     return (
         <div className="mt-36 px-6 max-w-screen-xl mx-auto">
-            <h1 className="text-5xl font-serif text-center mb-6 dark:text-primary ">Fitness At Your Screen</h1>
+            <h1 className="text-5xl font-serif text-center mb-6 dark:text-primary">Fitness At Your Screen</h1>
             <div className="flex items-center border rounded-lg p-2 bg-white w-80 mx-auto shadow-md shadow-primary">
                 <input
                     type="text"
                     placeholder="Search..."
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    className="w-full p-1 outline-none text-black text-sm "
+                    className="w-full p-1 outline-none text-black text-sm"
                 />
                 <button onClick={handleSearch} className="p-1">
                     <FaSearch className="text-gray-600 text-sm" />
@@ -113,17 +126,19 @@ const BlogPage = () => {
                 {sections.map(({ title, image }, index) => (
                     <div
                         key={index}
-                        ref={(el) => (sectionRefs.current[title] = el)}
+                        ref={(el) => (sectionRefs.current[title.toLowerCase()] = el)}
                         id={title.toLowerCase()}
                         className="w-full px-6"
                     >
-                        <h2 className="text-3xl font-serif dark:text-primary mb-4 ">{title}</h2>
+                        <h2 className="text-3xl font-serif dark:text-primary mb-4">{title}</h2>
                         <img
                             src={image}
                             alt={title}
                             className="w-full h-[500px] object-cover rounded-lg shadow-lg transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-2xl shadow-primary"
                         />
-                        <p className="dark:text-white text-black leading-relaxed text-xl mt-4">{content[title.toLowerCase()]}</p>
+                        <p className="dark:text-white text-black leading-relaxed text-xl mt-4">
+                            {content[title.toLowerCase()]}
+                        </p>
                     </div>
                 ))}
             </div>

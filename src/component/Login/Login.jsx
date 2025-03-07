@@ -1,10 +1,10 @@
-
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../../assets/Home/logo.png";
 import { FaDumbbell } from "react-icons/fa";
 import { IoArrowBack } from "react-icons/io5";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useAuth } from '../../context/AuthContext';
 
 const Login = () => {
   // States for modal open, email, password, OTP, and UI flags
@@ -19,6 +19,7 @@ const Login = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   // Prevent background scrolling when modal is open
@@ -124,9 +125,10 @@ const Login = () => {
       if (response.ok) {
         setOtpVerified(true);
         setMessage("Login successful!");
+        login(); // Set authentication state to true
         // Redirect to dashboard or home page
         setTimeout(() => {
-          navigate("/landing"); // Adjust the route as needed
+          navigate("/landing");
         }, 1500);
       } else {
         setMessage(data.error || "OTP verification failed.");

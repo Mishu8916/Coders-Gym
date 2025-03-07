@@ -1,6 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Ensure smooth scrolling behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Prevent body scrollbar */
+body {
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
 @layer components{
     .primary-btn{
         @apply inline-block rounded-md bg-primary hover:bg-primary/70 duration-300 py-2 px-6 text-white; 

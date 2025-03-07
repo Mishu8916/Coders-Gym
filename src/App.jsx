@@ -1,7 +1,8 @@
 import React from 'react';
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import Navbar from "./component/Navbar/Navbar";
 import LandingNavbar from './component/Landing_Page/LandingNavbar';
-// import Hero from './component/Hero/Hero'
+import Landing from './component/Landing_Page/Landing';
 import Hero1 from './component/Hero/Hero1';
 import About from './component/About/About';
 import About2 from './component/About/About2';
@@ -21,18 +22,30 @@ import LabTests from './component/Care/LabTests';
 import MindfulnessLibrary from './component/Mind/MindFulnessLibrary';
 import Fitness from './component/Fitness/Fitness';
 import ContactUsForm from './component/Contact/ContactUsForm';
-import Profile from'./component/Profile/Profile'
+import Profile from './component/Profile/Profile';
 import ForgotPassword from './component/Forgot_Password/forgotpassword';
 import BlogPage from './component/Blog/BlogPage';
 import GymToDoList from './component/Task/GymToDoList';
 import HealthCheckup from './component/Care/HealthCheckup';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import ProtectedRoute from './component/ProtectedRoute';
 
+// Layout component that includes the appropriate navbar
+const Layout = () => {
+  const { isAuthenticated } = useAuth();
+  return (
+    <div className="h-screen overflow-y-auto hide-scrollbar bg-white dark:bg-black dark:text-white">
+      {isAuthenticated ? <LandingNavbar /> : <Navbar />}
+      <div className={isAuthenticated ? "" : "pt-16"}> {/* Only add padding for non-authenticated pages */}
+        <Outlet />
+      </div>
+    </div>
+  );
+};
 
-export const App = () => {
-  
-  // Updated routing configuration with a default route
-  const router = createBrowserRouter([
+const AppContent = () => {
+  // Public routes available to all users
+  const publicRoutes = [
     {
       path: "/",
       element: (
@@ -67,12 +80,24 @@ export const App = () => {
       element: <OTP />,
     },
     {
+      path: "/forgotpassword",
+      element: <ForgotPassword />,
+    },
+    {
       path: "/services",
       element: <Services />,
     },
+  ];
+
+  // Protected routes only available to authenticated users
+  const protectedRoutes = [
     {
       path: "/landing",
-      element: <LandingNavbar />,
+      element: <Landing />, // Changed to use Landing component
+    },
+    {
+      path: "/auth/services", // New protected services route
+      element: <Services />,
     },
     {
       path: "/free_trail_modal",
@@ -87,41 +112,53 @@ export const App = () => {
       element: <MindfulnessLibrary />,
     },
     {
-      path:"/fit",
-      element:<Fitness/>,
+      path: "/fit",
+      element: <Fitness />,
     },
     {
-      path:"/contact_us",
-      element:<ContactUsForm/>,
+      path: "/contact_us",
+      element: <ContactUsForm />,
     },
     {
-      path:"/profile",
-      element:<Profile/>,
+      path: "/profile",
+      element: <Profile />,
     },
     {
-      path:"/forgotpassword",
-      element:<ForgotPassword/>,
+      path: "/blogpage",
+      element: <BlogPage />
     },
     {
-      path:"/blogpage",
-      element:<BlogPage/>
-    },
-    {
-      path:"/todolist",
-      element:<GymToDoList/>
+      path: "/todolist",
+      element: <GymToDoList />
     },
     {
       path: "/healthcheckup/:id",
-      element: <HealthCheckup />, 
+      element: <HealthCheckup />,
     },
+  ];
 
-     ]);
+  const router = createBrowserRouter([
+    {
+      element: <Layout />,
+      children: [
+        ...publicRoutes,
+        ...protectedRoutes.map(route => ({
+          ...route,
+          element: <ProtectedRoute>{route.element}</ProtectedRoute>
+        }))
+      ]
+    }
+  ]);
 
+  return <RouterProvider router={router} />;
+};
+
+export const App = () => {
   return (
-    <div className="overflow-x-hidden bg-white dark:bg-black dark:text-white text-black">
-      <Navbar />
-      <RouterProvider router={router} />
-    </div>
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 };
+
 export default App;

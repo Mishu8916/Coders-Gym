@@ -8,7 +8,7 @@ import { FaDumbbell } from "react-icons/fa";
 export const Navbar = () => {
   const Navlinks = [
     { id: 1, name: "HOME", link: "/" },
-    { id: 2, name: "SERVCES", link: "/services" },
+    { id: 2, name: "SERVICES", link: "/services" },
     { id: 3, name: "JOIN", link: "/register" },
   ];
 

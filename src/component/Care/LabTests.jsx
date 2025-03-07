@@ -10,7 +10,7 @@ const labTestsData = [
   { id: 4, name: "Fitness Essentials - Men", originalPrice: 2990, offerPrice: 1990, bgColor: "bg-yellow-200", Icon: FaMale },
   { id: 5, name: "Fitness Essentials - Women", originalPrice: 2990, offerPrice: 1990, bgColor: "bg-orange-200", Icon: FaFemale },
   { id: 6, name: "Sr.Citizen Advance Package - male", originalPrice: 5999, offerPrice: 2990, bgColor: "bg-teal-200", Icon: FaMale },
-    { id: 7, name: "Sr.Citizen Advance Package - female", originalPrice: 5990, offerPrice: 2990, bgColor: "bg-red-200", Icon: FaFemale },
+  { id: 7, name: "Sr.Citizen Advance Package - female", originalPrice: 5990, offerPrice: 2990, bgColor: "bg-red-200", Icon: FaFemale },
   { id: 8, name: "Iron Screening", originalPrice: 990, offerPrice: 690, bgColor: "bg-lime-200", Icon: FaHeartbeat },
   { id: 9, name: "Women Health", originalPrice: 3490, offerPrice: 1690, bgColor: "bg-emerald-200", Icon: FaChild },
   { id: 10, name: "PCOD Profile", originalPrice: 2990, offerPrice: 999, bgColor: "bg-cyan-200", Icon: FaCheckCircle },
@@ -40,7 +40,7 @@ const LabTests = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 w-full max-w-7xl h-auto">
         {labTestsData.map((test) => (
           <div
-          onClick={() => navigate(`/healthcheckup/${test.id}`)}
+            onClick={() => navigate(`/healthcheckup/${test.id}`)}
 
             className={`relative p-6 rounded-lg shadow-lg ${test.bgColor} flex flex-col items-center h-72 transform transition duration-300 hover:scale-105 hover:shadow-2xl cursor-pointer`}
           >

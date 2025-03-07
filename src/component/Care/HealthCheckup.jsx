@@ -1,9 +1,9 @@
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { 
-  FaUser, FaCapsules, FaShieldAlt, FaMale, FaFemale, FaHeartbeat, FaChild, 
-  FaCheckCircle, FaPrescriptionBottleAlt, FaHandHoldingHeart, FaRunning, 
-  FaVial, FaStethoscope, FaLeaf, FaBone, FaWeight, FaTint, FaArrowLeft 
+import {
+    FaUser, FaCapsules, FaShieldAlt, FaMale, FaFemale, FaHeartbeat, FaChild,
+    FaCheckCircle, FaPrescriptionBottleAlt, FaHandHoldingHeart, FaRunning,
+    FaVial, FaStethoscope, FaLeaf, FaBone, FaWeight, FaTint, FaArrowLeft
 } from "react-icons/fa";
 
 const labTestsData = [
@@ -34,6 +34,10 @@ const HealthCheckup = () => {
     const navigate = useNavigate();
     const selectedPackage = labTestsData.find((pkg) => pkg.id === Number(id)) || labTestsData[0];
 
+    const handleBuyPlan = () => {
+        navigate("/payment");  // Navigate to payment page
+    };
+
     return (
         <div className="mt-24 fixed inset-0 flex items-center justify-center dark:bg-black overflow-auto px-4">
             <div className="p-4 w-full max-w-4xl dark:bg-dark rounded-lg shadow-lg shadow-primary transition-transform duration-300 hover:scale-105 relative">
@@ -57,7 +61,10 @@ const HealthCheckup = () => {
                         <div className="flex flex-wrap justify-center md:justify-start items-center mt-4">
                             <span className="text-lg text-gray-400 line-through mr-3">₹{selectedPackage.originalPrice}</span>
                             <span className="text-xl font-bold text-red-500">₹{selectedPackage.offerPrice}</span>
-                            <button className="ml-4 bg-primary dark:text-white px-4 py-2 rounded-lg text-base shadow-md hover:shadow-primary">
+                            <button
+                                className="ml-4 bg-primary dark:text-white px-4 py-2 rounded-lg text-base shadow-md hover:shadow-primary"
+                                onClick={handleBuyPlan}
+                            >
                                 Buy Plan
                             </button>
                         </div>
@@ -66,7 +73,7 @@ const HealthCheckup = () => {
                 <div className="mt-6 border-t pt-4">
                     <h3 className="text-lg md:text-xl font-semibold">Recommended Addons</h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-4">
-                        {[ 
+                        {[
                             { name: "Vitamin Screening", price: "₹890" },
                             { name: "T3, T4", price: "₹590" },
                             { name: "Iron Screening", price: "₹690" },
