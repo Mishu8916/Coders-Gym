@@ -1,32 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate from react-router-dom
 import { FiUser, FiShoppingCart, FiSettings, FiLogOut } from "react-icons/fi";
 import { MdOutlineMedicalServices } from "react-icons/md";
 import { HiOutlineTicket } from "react-icons/hi";
 import { IoMdMail } from "react-icons/io";
+import { useAuth } from "../../context/AuthContext";
 
 const ProfilePage = () => {
   const navigate = useNavigate(); // ✅ Hook for navigation
+  const { userProfile, updateProfile } = useAuth();
 
-  const [profile, setProfile] = useState({
-    name: "",
-    gender: "",
-    phone: "",
-    dob: "",
-    email: "",
-    workEmail: "",
-  });
-
+  const [profile, setProfile] = useState(userProfile);
   const [image, setImage] = useState(null);
   const [editingProfile, setEditingProfile] = useState({ ...profile });
   const [isEditing, setIsEditing] = useState(false);
+
+  useEffect(() => {
+    setProfile(userProfile);
+    setEditingProfile(userProfile);
+  }, [userProfile]);
 
   const handleUpdate = (field, value) => {
     setEditingProfile((prev) => ({ ...prev, [field]: value }));
   };
 
   const handleSave = () => {
-    setProfile(editingProfile);
+    updateProfile(editingProfile);
     setIsEditing(false);
   };
 
@@ -40,7 +39,14 @@ const ProfilePage = () => {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setImage(reader.result);
+        const updatedProfile = {
+          ...editingProfile,
+          profileImage: reader.result
+        };
+        setEditingProfile(updatedProfile);
+        if (!isEditing) {
+          updateProfile(updatedProfile);
+        }
       };
       reader.readAsDataURL(file);
     }
@@ -63,12 +69,12 @@ const ProfilePage = () => {
 
   return (
     <div className="mt-32 flex flex-col md:flex-row min-h-screen bg-white dark:bg-black">
-  <aside className="w-full md:w-80 lg:w-96 p-6 bg-white dark:bg-black/90 shadow-2xl rounded-b-lg md:rounded-r-lg md:rounded-b-none border-r border-gray-200 dark:border-gray-700">
+      <aside className="w-full md:w-80 lg:w-96 p-6 bg-white dark:bg-black/90 shadow-2xl rounded-b-lg md:rounded-r-lg md:rounded-b-none border-r border-gray-200 dark:border-gray-700">
         <div className="flex flex-col items-center">
           <label htmlFor="profile-file-upload" className="cursor-pointer relative group">
             <div className="w-32 h-32 rounded-full overflow-hidden flex items-center justify-center bg-black/70 dark:bg-white/70">
-              {image ? (
-                <img src={image} alt="Profile" className="w-full h-full object-cover" />
+              {profile.profileImage ? (
+                <img src={profile.profileImage} alt="Profile" className="w-full h-full object-cover" />
               ) : (
                 <FiUser className="text-gray-500 w-20 h-20" />
               )}
@@ -104,8 +110,8 @@ const ProfilePage = () => {
           {/* Profile Image with Hover Edit Overlay */}
           <label htmlFor="profile-file-upload" className="relative group cursor-pointer">
             <div className="w-40 h-40 rounded-full overflow-hidden flex items-center justify-center bg-gray-200 dark:bg-gray-700 shadow-lg">
-              {image ? (
-                <img src={image} alt="Profile" className="w-full h-full object-cover" />
+              {profile.profileImage ? (
+                <img src={profile.profileImage} alt="Profile" className="w-full h-full object-cover" />
               ) : (
                 <FiUser className="text-gray-500 w-20 h-20" />
               )}

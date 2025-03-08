@@ -27,6 +27,9 @@ import ForgotPassword from './component/Forgot_Password/forgotpassword';
 import BlogPage from './component/Blog/BlogPage';
 import GymToDoList from './component/Task/GymToDoList';
 import HealthCheckup from './component/Care/HealthCheckup';
+import TravelMatch from './component/TravelMatch/TravelMatch';
+import TravelChat from './component/Chat/TravelChat';
+import FloatingIcons from './component/FloatingIcons/FloatingIcons';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import ProtectedRoute from './component/ProtectedRoute';
 
@@ -39,6 +42,7 @@ const Layout = () => {
       <div className={isAuthenticated ? "" : "pt-16"}> {/* Only add padding for non-authenticated pages */}
         <Outlet />
       </div>
+      {isAuthenticated && <FloatingIcons />}
     </div>
   );
 };
@@ -135,6 +139,14 @@ const AppContent = () => {
       path: "/healthcheckup/:id",
       element: <HealthCheckup />,
     },
+    {
+      path: "/travel-match",
+      element: <TravelMatch />
+    },
+    {
+      path: "/travel-chat",
+      element: <TravelChat />
+    }
   ];
 
   const router = createBrowserRouter([
