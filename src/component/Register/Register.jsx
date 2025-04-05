@@ -287,14 +287,14 @@ const Register = () => {
           disabled={!isValidEmail || !isValidPassword || !otpVerified}
           className={`w-full py-3 -mt-2 rounded-lg transition ${isValidEmail && isValidPassword && otpVerified
               ? "bg-blue-600 text-white hover:bg-blue-500"
-              : "bg-gray-400 text-white cursor-not-allowed"
+              : "bg-blue-600 text-white cursor-not-allowed"
             }`}
         >
           Register
         </button>
 
         <p
-          className="text-blue-500 text-sm font-serif text-center mt-4 cursor-pointer hover:underline"
+          className="dark:text-white text-black/80 text-sm font-serif text-center mt-4 cursor-pointer hover:underline"
           onClick={() => navigate("/login")}
         >
           Already a user?

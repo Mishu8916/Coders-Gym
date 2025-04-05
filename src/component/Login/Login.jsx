@@ -46,9 +46,8 @@ const Login = () => {
     }
   };
 
-  // Step 1: Send OTP by calling the send-otp API endpoint
+  // Step 1: Verify credentials and send OTP
   const handleContinue = async () => {
-    // If OTP has not yet been sent, send the OTP
     if (!otpSent) {
       if (!email.trim() || !password.trim() || emailError) {
         setMessage("Please provide valid email and password.");
@@ -57,24 +56,40 @@ const Login = () => {
       setMessage("");
       setLoading(true);
       try {
-        const response = await fetch("http://127.0.0.1:8000/login-api/send-otp1/", {
+        // First verify credentials
+        const verifyResponse = await fetch("http://127.0.0.1:8000/login-api/verify-credentials/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+        const verifyData = await verifyResponse.json();
+        
+        if (!verifyResponse.ok) {
+          setMessage(verifyData.error || "Invalid email or password.");
+          setLoading(false);
+          return;
+        }
+
+        // If credentials are valid, send OTP
+        const otpResponse = await fetch("http://127.0.0.1:8000/login-api/send-otp1/", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),
         });
-        const data = await response.json();
-        if (response.ok) {
+        const otpData = await otpResponse.json();
+        
+        if (otpResponse.ok) {
           setOtpSent(true);
           setMessage("OTP sent to your email.");
         } else {
-          setMessage(data.error || "Failed to send OTP.");
+          setMessage(otpData.error || "Failed to send OTP.");
         }
       } catch (error) {
         setMessage("An error occurred. Please try again later.");
       }
       setLoading(false);
     } else {
-      // Optionally, use the same function for "Resend OTP"
+      // Resend OTP logic
       setLoading(true);
       try {
         const response = await fetch("http://127.0.0.1:8000/login-api/send-otp1/", {
@@ -219,7 +234,7 @@ const Login = () => {
               </div>
             </div>
 
-            <div className="mb-4 text-center">
+            <div className="mb-2 text-center">
               <button
                 onClick={handleForgotPassword}
                 className="text-sm text-primary hover:underline focus:outline-none"
@@ -227,6 +242,11 @@ const Login = () => {
                 Forgot Password?
               </button>
             </div>
+            <div className="mb-2 text-center">
+          <button onClick={() => navigate("/register")} className="text-sm font-sans dark:text-primary text-black hover:underline focus:outline-none">
+           New User? Sign Up
+          </button>
+        </div>
 
             <div className="mb-4">
               <button

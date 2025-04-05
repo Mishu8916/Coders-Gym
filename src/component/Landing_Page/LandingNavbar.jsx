@@ -6,7 +6,7 @@ import { FaDumbbell } from "react-icons/fa";
 import { FaAngleDoubleDown } from 'react-icons/fa';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
-import { FaUser, FaSignOutAlt, FaBars, FaTimes } from 'react-icons/fa';
+import { FaUser, FaSignOutAlt, FaBars, FaTimes,FaEnvelope } from 'react-icons/fa';
 
 export const LandingNavbar = () => {
   const { logout } = useAuth();
@@ -21,14 +21,10 @@ export const LandingNavbar = () => {
 
   const Navlinks = [
     { id: 1, name: "HOME", link: "/landing" },
-    // { id: 2, name: "PROFILE", link: "/profile" },
-    { id: 3, name: "SERVICES", link: "/auth/services" },
-    // { id: 4, name: "BLOG", link: "/blogpage" },
-    // { id: 5, name: "TASKS", link: "/todolist" },
-    { id: 6, name: "CONTACT", link: "/contact_us" },
-    { id: 7, name: "TRAVEL MATCH", link: "/travel-match" },
-    { id: 8, name: "TRAVEL CHAT", link: "/travel-chat" },
-  ];
+    { id: 3, name: "SERVICES", link: "/auth/services"  },
+    { id: 2, name: "PROFILE", link: "/profile", icon: <FaUser />},
+    { id: 6, name: "CONTACT", link: "/contact_us", icon: <FaEnvelope /> },
+    ];
 
   const SecondaryLinks = [
     { id: 4, name: "FITNESS", link: "/fit" },
@@ -143,7 +139,7 @@ export const LandingNavbar = () => {
       )}
 
       {/* Secondary Menu */}
-      <div className="hidden md:flex justify-center relative -mt-3 ml-8">
+      <div className="hidden md:flex justify-center relative -mt-3 -mr-2 ml-24">
         <FaAngleDoubleDown
           className="text-lg dark:text-primary animate-bounce cursor-pointer arrow-icon"
           onClick={handleArrowClick}
@@ -151,7 +147,7 @@ export const LandingNavbar = () => {
         
         {isMenuVisible && (
           <div className="absolute top-full left-1/2 transform -translate-x-1/2 mt-2 transition-all duration-300 ease-in-out options-container">
-            <ul className="dark:bg-dark/40 bg-white/40 shadow-lg rounded-lg p-2 w-max space-x-16 flex gap-10">
+            <ul className="dark:bg-dark/40 bg-white/40 shadow-lg rounded-lg p-2 w-max space-x-8 flex gap-10">
               {SecondaryLinks.map(({ id, name, link }) => (
                 <li key={id} className="py-2">
                   <Link

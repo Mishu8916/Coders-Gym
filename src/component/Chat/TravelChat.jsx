@@ -83,7 +83,7 @@ const TravelChat = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black pt-32 px-4">
+    <div className="mt-10 min-h-screen bg-white dark:bg-black pt-32 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-4xl font-serif text-gray-900 dark:text-primary">

@@ -111,14 +111,14 @@ const TravelMatch = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-white dark:bg-black pt-32 flex items-center justify-center">
+      <div className=" min-h-screen bg-white dark:bg-black pt-32 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-black pt-32 px-4 sm:px-6 lg:px-8">
+    <div className="mt-10 min-h-screen bg-white dark:bg-black pt-20 sm:pt-24 md:pt-28 lg:pt-32 px-4 sm:px-6 md:px-8 lg:px-12">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-8">
           <h1 className="text-4xl sm:text-5xl font-serif text-gray-900 dark:text-primary">

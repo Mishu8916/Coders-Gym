@@ -92,7 +92,7 @@ const ProfilePage = () => {
           <MenuItem icon={<MdOutlineMedicalServices />} label="Medical Records" onClick={() => handleNavigation("/Labtests")} />
           <MenuItem icon={<FiUser />} label="Your Workout plans" onClick={() => handleNavigation("/todolist")} />
           <MenuItem icon={<HiOutlineTicket />} label="Redeem Voucher" onClick={() => handleNavigation("/redeem-voucher")} />
-          <MenuItem icon={<IoMdMail />} label="Support" onClick={() => handleNavigation("/support")} />
+          <MenuItem icon={<IoMdMail />} label="Support" onClick={() => handleNavigation("/contact_us")} />
           <MenuItem icon={<FiLogOut />} label="Logout" onClick={() => handleNavigation("/logout")} />
         </nav>
       </aside>
