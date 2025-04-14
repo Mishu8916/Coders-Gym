@@ -127,8 +127,8 @@ const TravelMatch = () => {
               Travel Buddy
             </span>
           </h1>
-          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
-            Connect with fellow travelers heading to the same destination
+          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300 font-serif">
+            Connect with fellow buddies travelers heading to the same destination
           </p>
         </div>
 
@@ -278,7 +278,7 @@ const TravelMatch = () => {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="px-6 py-3 bg-primary text-white rounded-md hover:bg-primary/90 transition duration-300 disabled:opacity-50"
+              className="px-6 py-3 bg-primary dark:text-white text-black/70 font-serif rounded-md hover:bg-primary/90 transition duration-300 disabled:opacity-50"
             >
               {isSubmitting ? 'Submitting...' : 'Find Travel Buddy'}
             </button>
@@ -286,7 +286,7 @@ const TravelMatch = () => {
             <button
               type="button"
               onClick={() => navigate('/travel-chat')}
-              className="px-6 py-3 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition duration-300"
+              className="px-6 py-3 bg-gray-200 font-serif dark:text-white text-black rounded-md hover:bg-primary transition duration-300"
             >
               View Matches
             </button>

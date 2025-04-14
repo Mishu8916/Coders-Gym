@@ -19,19 +19,6 @@ export const LandingNavbar = () => {
     navigate('/');
   };
 
-  const Navlinks = [
-    { id: 1, name: "HOME", link: "/landing" },
-    { id: 3, name: "SERVICES", link: "/auth/services"  },
-    { id: 2, name: "PROFILE", link: "/profile", icon: <FaUser />},
-    { id: 6, name: "CONTACT", link: "/contact_us", icon: <FaEnvelope /> },
-    ];
-
-  const SecondaryLinks = [
-    { id: 4, name: "FITNESS", link: "/fit" },
-    { id: 5, name: "CARE", link: "/Labtests" },
-    { id: 6, name: "MIND", link: "/mind" },
-  ];
-
   const handleArrowClick = () => {
     setIsMenuVisible(!isMenuVisible);
   };
@@ -48,6 +35,19 @@ export const LandingNavbar = () => {
       document.removeEventListener('click', handleClickOutside);
     };
   }, []);
+
+  const Navlinks = [
+    { id: 1, name: "HOME", link: "/landing" },
+    { id: 3, name: "SERVICES", link: "/auth/services"  },
+    { id: 2, name: "PROFILE", link: "/profile", icon: <FaUser />},
+    { id: 6, name: "CONTACT", link: "/contact_us", icon: <FaEnvelope /> },
+    ];
+
+  const SecondaryLinks = [
+    { id: 4, name: "FITNESS", link: "/fit" },
+    { id: 5, name: "CARE", link: "/Labtests" },
+    { id: 6, name: "MIND", link: "/mind" },
+  ];
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-white dark:bg-dark dark:text-white shadow-md z-50">
@@ -79,7 +79,7 @@ export const LandingNavbar = () => {
             <li key={id}>
               <Link
                 to={link}
-                className="text-lg font-semibold hover:text-primary duration-300 flex items-center gap-2"
+                className="text-lg font-semibold hover:text-primary duration-300 flex items-center gap-2 "
               >
                 {icon || name}
               </Link>
@@ -90,7 +90,7 @@ export const LandingNavbar = () => {
               onClick={handleLogout}
               className="text-lg font-semibold dark:text-white text-black duration-300 flex items-center gap-2 hover:fill-primary"
             >
-              <FaSignOutAlt className="transition-colors duration-100 hover:text-primary" />
+              <FaSignOutAlt className="transition-colors duration-100 hover:text-primary"/>
             </button>
           </li>
           <li>
@@ -134,11 +134,39 @@ export const LandingNavbar = () => {
                 <DarkMode />
               </li>
             </ul>
+
+            {/* Mobile Secondary Menu */}
+            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+              <div className="flex items-center justify-center mb-4">
+                <FaAngleDoubleDown
+                  className="text-lg dark:text-primary animate-bounce cursor-pointer"
+                  onClick={handleArrowClick}
+                />
+              </div>
+              {isMenuVisible && (
+                <ul className="space-y-4">
+                  {SecondaryLinks.map(({ id, name, link }) => (
+                    <li key={id}>
+                      <Link
+                        to={link}
+                        className="text-lg font-semibold hover:text-primary duration-300 block text-center"
+                        onClick={() => {
+                          setIsMobileMenuOpen(false);
+                          setIsMenuVisible(false);
+                        }}
+                      >
+                        {name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
         </div>
       )}
 
-      {/* Secondary Menu */}
+      {/* Desktop Secondary Menu */}
       <div className="hidden md:flex justify-center relative -mt-3 -mr-2 ml-24">
         <FaAngleDoubleDown
           className="text-lg dark:text-primary animate-bounce cursor-pointer arrow-icon"

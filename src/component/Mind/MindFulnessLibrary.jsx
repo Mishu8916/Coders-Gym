@@ -22,7 +22,7 @@ const MindfulnessLibrary = () => {
   const navigate = useNavigate();
 
   const handleCardClick = () => {
-    navigate('/payment');
+    navigate('');
   };
   return (
     <div className="mt-14 w-full h-auto flex items-center justify-center flex-col lg:py-16 md:py-14 sm:py-12 py-10 lg:px-24 md:px-16 sm:px-6 px-4 dark:bg-black">

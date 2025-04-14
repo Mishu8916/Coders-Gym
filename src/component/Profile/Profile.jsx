@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ Import useNavigate from react-router-dom
+import { useNavigate } from "react-router-dom"; 
 import { FiUser, FiShoppingCart, FiSettings, FiLogOut } from "react-icons/fi";
 import { MdOutlineMedicalServices } from "react-icons/md";
 import { HiOutlineTicket } from "react-icons/hi";

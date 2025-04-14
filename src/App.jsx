@@ -28,11 +28,12 @@ import BlogPage from './component/Blog/BlogPage';
 import GymToDoList from './component/Task/GymToDoList';
 import HealthCheckup from './component/Care/HealthCheckup';
 import TravelMatch from './component/TravelMatch/TravelMatch';
-import TravelChat from './component/Chat/TravelChat';
+import TravelChat from './component/Travel-Chat/TravelChat';
 import FloatingIcons from './component/FloatingIcons/FloatingIcons';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import ProtectedRoute from './component/ProtectedRoute';
-
+import ChatBot from './component/ChatBot/ChatBot';
+import PaymentPage from './component/Payment/PaymentPage';
 // Layout component that includes the appropriate navbar
 const Layout = () => {
   const { isAuthenticated } = useAuth();
@@ -91,6 +92,14 @@ const AppContent = () => {
       path: "/services",
       element: <Services />,
     },
+    {
+      path: "/payment",
+      element: <PaymentPage />
+    },
+    {
+      path: "/healthcheckup/:id",
+      element: <HealthCheckup />,
+    }
   ];
 
   // Protected routes only available to authenticated users
@@ -136,10 +145,6 @@ const AppContent = () => {
       element: <GymToDoList />
     },
     {
-      path: "/healthcheckup/:id",
-      element: <HealthCheckup />,
-    },
-    {
       path: "/travel-match",
       element: <TravelMatch />
     },
@@ -169,6 +174,7 @@ export const App = () => {
   return (
     <AuthProvider>
       <AppContent />
+      <ChatBot />
     </AuthProvider>
   );
 };

@@ -86,8 +86,8 @@ const TravelChat = () => {
     <div className="mt-10 min-h-screen bg-white dark:bg-black pt-32 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-4xl font-serif text-gray-900 dark:text-primary">
-            Travel Buddy Chat
+          <h1 className="text-4xl font-serif text-black/90 dark:text-white">
+            Travel's<span className='text-primary'> Buddy</span> Chat
           </h1>
           <button
             onClick={() => navigate('/travel-match')}

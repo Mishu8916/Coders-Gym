@@ -1,56 +1,112 @@
-import React, { useState } from "react";
-import { FaQrcode } from "react-icons/fa";
-
-const labTestsData = [
-  { id: 1, name: "Full Body Checkup", originalPrice: 1990, offerPrice: 990 },
-  { id: 2, name: "Vitamin Profile", originalPrice: 590, offerPrice: 890 },
-  { id: 3, name: "Thyroid Screening", originalPrice: 1990, offerPrice: 450 },
-  { id: 4, name: "Fitness Essentials - Men", originalPrice: 2990, offerPrice: 1990 },
-  { id: 5, name: "Fitness Essentials - Women", originalPrice: 2990, offerPrice: 1990 },
-  { id: 6, name: "Sr.Citizen Advance Package - Male", originalPrice: 5999, offerPrice: 2990 },
-  { id: 7, name: "Sr.Citizen Advance Package - Female", originalPrice: 5990, offerPrice: 2990 },
-  { id: 8, name: "Iron Screening", originalPrice: 990, offerPrice: 690 },
-  { id: 9, name: "Women Health", originalPrice: 3490, offerPrice: 1690 },
-  { id: 10, name: "PCOD Profile", originalPrice: 2990, offerPrice: 999 },
-  { id: 11, name: "Diabetes Screening", originalPrice: 590, offerPrice: 490 },
-  { id: 12, name: "Immunity Screening", originalPrice: 2590, offerPrice: 1390 },
-  { id: 13, name: "Energy Screening", originalPrice: 1490, offerPrice: 990 },
-  { id: 14, name: "Pregnancy Test", originalPrice: 790, offerPrice: 590 },
-  { id: 15, name: "Kidney Test", originalPrice: 390, offerPrice: 290 },
-  { id: 16, name: "Hairfall Test", originalPrice: 2390, offerPrice: 1190 },
-  { id: 17, name: "Bone Test", originalPrice: 1490, offerPrice: 990 },
-  { id: 18, name: "Liver Test", originalPrice: 790, offerPrice: 590 },
-  { id: 19, name: "Obesity", originalPrice: 990, offerPrice: 590 },
-  { id: 20, name: "Anemia", originalPrice: 790, offerPrice: 490 }
-];
+import React, { useEffect, useState } from "react";
+import { FaQrcode, FaArrowLeft } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const PaymentPage = () => {
-  const [selectedTest, setSelectedTest] = useState(labTestsData[0]);
-  const paymentUrl = `https://yourpaymentgateway.com/pay?amount=${selectedTest.offerPrice}`;
+  const navigate = useNavigate();
+  const [orderDetails, setOrderDetails] = useState(null);
+
+  useEffect(() => {
+    const storedOrderDetails = localStorage.getItem("orderDetails");
+    if (storedOrderDetails) {
+      try {
+        setOrderDetails(JSON.parse(storedOrderDetails));
+      } catch (error) {
+        console.error("Error parsing order details:", error);
+      }
+    }
+  }, []);
+
+  if (!orderDetails) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-black p-4">
+        <div className="bg-white dark:bg-dark p-6 rounded-2xl shadow-lg text-center w-96">
+          <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
+            No Order Details Found
+          </h2>
+          <button
+            onClick={() => navigate(-1)}
+            className="w-full bg-blue-500 text-white p-2 rounded font-bold transition duration-300 hover:bg-blue-700"
+          >
+            Go Back
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  const { package: selectedPackage, addons, total } = orderDetails;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
-      <div className="bg-white p-6 rounded-2xl shadow-lg text-center w-96 flex flex-col items-center">
-        <h2 className="text-xl font-bold mb-4 text-gray-900">Scan to Pay</h2>
-        <FaQrcode className="text-9xl mb-4 text-gray-700" />
-        <p className="text-black mb-2 text-lg">{selectedTest.name}</p>
-        <p className="text-black mb-4 text-lg">Amount: ₹{selectedTest.offerPrice}</p>
-        
-        <select
-          className="mb-4 p-2 border rounded w-full text-gray-900"
-          onChange={(e) => setSelectedTest(labTestsData.find(test => test.id == e.target.value))}
-        >
-          {labTestsData.map((test) => (
-            <option key={test.id} value={test.id}>{test.name}</option>
-          ))}
-        </select>
-        
-        <button
-          className="w-full bg-blue-500 text-white p-2 rounded font-bold transition duration-300 hover:bg-blue-700"
-          onClick={() => window.location.href = paymentUrl}
-        >
-          Pay Now
-        </button>
+    <div className="h-screen overflow-hidden bg-gray-100 dark:bg-black p-4 " >
+      <div className="max-w-4xl mx-auto flex items-center justify-center h-full transition-transform duration-300 hover:scale-105">
+        <div className="relative bg-white dark:bg-dark p-6 rounded-2xl shadow-lg shadow-primary w-full max-w-2xl">
+          {/* Back Arrow in top-left corner */}
+          <button
+            onClick={() => navigate(-1)}
+            className="absolute top-4 left-4 text-black-600 dark:text-gray-300 hover:text-primary dark:hover:text-primary transition-colors"
+          >
+            <FaArrowLeft size={15} />
+          </button>
+
+          {/* Centered Title */}
+          <h2 className="text-2xl font-bold mb-2 text-gray-900 dark:text-white text-center">
+            Order Summary
+          </h2>
+          <h3 className="text-xl font-semibold mb-6 text-primary text-center">
+            {selectedPackage.name}
+          </h3>
+
+          {/* Package Details */}
+          <div className="mb-6 p-4 bg-gray-50 dark:bg-black/50 rounded-lg">
+            <div className="flex justify-between items-center">
+              <span className="text-gray-600 dark:text-gray-300">Test Price</span>
+              <div className="flex items-center gap-3">
+                <span className="text-gray-400 line-through">
+                  ₹{selectedPackage.originalPrice}
+                </span>
+                <span className="text-red-500 font-semibold">
+                  ₹{selectedPackage.offerPrice}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Addons */}
+          {addons.length > 0 && (
+            <div className="mb-6 p-4 bg-gray-50 dark:bg-black/50 rounded-lg">
+              <h3 className="font-semibold text-lg mb-3 text-gray-900 dark:text-white">
+                Selected Addons
+              </h3>
+              <div className="space-y-3">
+                {addons.map((addon) => (
+                  <div key={addon.id} className="flex justify-between items-center">
+                    <span className="text-gray-600 dark:text-gray-300">{addon.name}</span>
+                    <span className="text-red-500">₹{addon.price}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Total */}
+          <div className="border-t dark:border-gray-700 pt-4 mb-8">
+            <div className="flex justify-between items-center text-xl font-bold">
+              <span className="text-gray-900 dark:text-white">Total Amount</span>
+              <span className="text-primary">₹{total}</span>
+            </div>
+          </div>
+
+          {/* QR Code */}
+          <div className="text-center mb-2">
+            <div className="bg-white dark:bg-black/50 p-4 rounded-lg shadow-md  shadow-primary inline-block">
+              <FaQrcode className="text-9xl mx-auto mb-4 text-gray-700 dark:text-gray-300" />
+              <p className="text-gray-600 dark:text-gray-300 font-medium">
+                Scan to pay ₹{total}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
