@@ -19,7 +19,7 @@ import "swiper/css/navigation";
 import { Autoplay, Navigation } from "swiper/modules";
 import { useNavigate } from "react-router-dom";
 import Footer from "../Footer/Footer";
-import Bmi from "../BMI/Bmi";
+import BMI from "../Bmi/Bmi";
 import Free_Trial_Modal from "./Free_Trail_Modal";
 
 const Landing = () => {
@@ -153,7 +153,7 @@ const Landing = () => {
       {/* Free Trial Modal */}
       {isModalOpen && <Free_Trial_Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />}
 
-      <Bmi />
+      <BMI/>
       <Footer />
     </>
   );

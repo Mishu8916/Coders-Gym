@@ -12,7 +12,7 @@ import Pricing from './component/Pricing/Pricing';
 import AppStoreBanner from './component/AppStoreBanner/AppStoreBanner';
 import Testimonials from './component/Testimonial/Testimonials';
 import Footer from './component/Footer/Footer';
-import Bmi from './component/BMI/Bmi';
+import BMI from './component/Bmi/Bmi';
 import Register from './component/Register/Register';
 import Login from './component/Login/Login';
 import OTP from './component/Login/OTP';
@@ -63,7 +63,7 @@ const AppContent = () => {
           <Pricing />
           <AppStoreBanner />
           <Testimonials />
-          <Bmi />
+         <BMI/>
           <Footer />
         </>
       ),
