@@ -8,7 +8,7 @@ import About from './component/About/About';
 import About2 from './component/About/About2';
 import About3 from './component/About/About3';
 import Contact from './component/Contact/Contact';
-import Pricing from './component/Pricing/pricing';
+import Pricing from './component/Pricing/Pricing';
 import AppStoreBanner from './component/AppStoreBanner/AppStoreBanner';
 import Testimonials from './component/Testimonial/Testimonials';
 import Footer from './component/Footer/Footer';
