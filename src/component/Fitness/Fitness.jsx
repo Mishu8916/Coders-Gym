@@ -11,7 +11,7 @@ import img8 from "../../assets/Fit/8.jpg";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Pricing from "../Pricing/pricing";
+import Pricing from "../Pricing/Pricing";
 import Footer from "../Footer/Footer";
 
 // =============== Modified Data Arrays with Multiple Images ===============
