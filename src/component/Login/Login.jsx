@@ -59,6 +59,7 @@ const Login = () => {
         // First verify credentials
         const verifyResponse = await fetch("http://127.0.0.1:8000/login-api/verify-credentials/", {
           method: "POST",
+          credentials: "include",    
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email, password }),
         });
@@ -73,6 +74,7 @@ const Login = () => {
         // If credentials are valid, send OTP
         const otpResponse = await fetch("http://127.0.0.1:8000/login-api/send-otp1/", {
           method: "POST",
+          credentials: "include",    
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),
         });
@@ -94,6 +96,7 @@ const Login = () => {
       try {
         const response = await fetch("http://127.0.0.1:8000/login-api/send-otp1/", {
           method: "POST",
+          credentials: "include",    
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ email }),
         });
@@ -133,6 +136,7 @@ const Login = () => {
     try {
       const response = await fetch("http://127.0.0.1:8000/login-api/verify-otp2/", {
         method: "POST",
+        credentials: "include",    
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password, otp: enteredOtp }),
       });

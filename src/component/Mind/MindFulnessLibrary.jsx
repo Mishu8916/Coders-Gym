@@ -9,21 +9,69 @@ import img6 from "../../assets/Mind/sleep.webp";
 import img7 from "../../assets/Mind/prayanam.webp";
 
 const minddata = [
-  { id: 1, title: "One Rep at a time", description: "Join podcast host, Deepak Gopalakrishnan aka Chuck, in his quest to build a fitness habit for life.", packs: "9 Packs", image: img },
-  { id: 2, title: "Covid Recovery", description: "This program focuses on bringing stability back into the body through gentle stretches and meditation.", packs: "3 Packs", image: img1 },
-  { id: 3, title: "5 Minute Meditations", description: "Panic? Anxiety? We have you all covered with these short 5-minute meditations. Dive in!", packs: "14 Packs", image: img2 },
-  { id: 4, title: "Running Programs", description: "Running Programs", packs: "1 Pack", image: img4 },
-  { id: 5, title: "Meditation - Foundation", description: "Get started with meditation! This series will guide you through the basic skills of meditation.", packs: "5 Packs", image: img5 },
-  { id: 6, title: "Sleep Stories", description: "Say goodbye to sleepless nights! Created by Dr. Shyam Bhat, these stories help you relax and drift into sleep.", packs: "2 Packs", image: img6 },
-  { id: 7, title: "Yoga Pranayam", description: "This Pranayam series contains breath practices which have the potential to affect the gross body", packs: "2 Packs", image: img7 },
+  {
+    id: 1,
+    title: "One Rep at a time",
+    description: "Join podcast host, Deepak Gopalakrishnan aka Chuck, in his quest to build a fitness habit for life.",
+    packs: "9 Packs",
+    image: img,
+    link: "https://www.youtube.com/watch?v=RcC2JEWfldE",
+  },
+  {
+    id: 2,
+    title: "Covid Recovery",
+    description: "This program focuses on bringing stability back into the body through gentle stretches and meditation.",
+    packs: "3 Packs",
+    image: img1,
+    link: "https://www.youtube.com/watch?v=LfpbRQIa_Zo",
+  },
+  {
+    id: 3,
+    title: "5 Minute Meditations",
+    description: "Panic? Anxiety? We have you all covered with these short 5-minute meditations. Dive in!",
+    packs: "14 Packs",
+    image: img2,
+    link: "https://www.youtube.com/watch?v=inpok4MKVLM",
+  },
+  {
+    id: 4,
+    title: "Running Programs",
+    description: "Running Programs",
+    packs: "1 Pack",
+    image: img4,
+    link: "https://www.youtube.com/watch?v=LV_KhDxY_w0",
+  },
+  {
+    id: 5,
+    title: "Meditation - Foundation",
+    description: "Get started with meditation! This series will guide you through the basic skills of meditation.",
+    packs: "5 Packs",
+    image: img5,
+    link: "https://www.youtube.com/watch?v=YRJ6xoiRcpQ",
+  },
+  {
+    id: 6,
+    title: "Sleep Stories",
+    description: "Say goodbye to sleepless nights! Created by Dr. Shyam Bhat, these stories help you relax and drift into sleep.",
+    packs: "2 Packs",
+    image: img6,
+    link: "https://www.youtube.com/watch?v=C9np6f1PgMY",
+  },
+  {
+    id: 7,
+    title: "Yoga Pranayam",
+    description: "This Pranayam series contains breath practices which have the potential to affect the gross body",
+    packs: "2 Packs",
+    image: img7,
+    link: "https://www.youtube.com/watch?v=xfhfltT2Keo",
+  },
 ];
 
 const MindfulnessLibrary = () => {
-  const navigate = useNavigate();
-
-  const handleCardClick = () => {
-    navigate('');
+  const handleCardClick = (link) => {
+    window.open(link, "_blank"); // Opens the video in a new tab
   };
+
   return (
     <div className="mt-14 w-full h-auto flex items-center justify-center flex-col lg:py-16 md:py-14 sm:py-12 py-10 lg:px-24 md:px-16 sm:px-6 px-4 dark:bg-black">
       <h6 className="mt-10 text-lg font-medium text-gray-200 flex items-center gap-x-2 mb-6">
@@ -38,7 +86,7 @@ const MindfulnessLibrary = () => {
         {minddata.map((item) => (
           <div
             key={item.id}
-            onClick={() => handleCardClick(item.id)}
+            onClick={() => handleCardClick(item.link)}
             className="group lg:w-[24%] md:w-[48%] sm:w-[48%] w-full h-auto rounded-lg overflow-hidden hover:shadow-lg hover:shadow-primary ease-out duration-700 cursor-pointer transform transition-transform hover:scale-105"
           >
             <div

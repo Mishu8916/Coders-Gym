@@ -38,7 +38,7 @@ const PaymentPage = () => {
   const { package: selectedPackage, addons, total } = orderDetails;
 
   return (
-    <div className="h-screen overflow-hidden bg-gray-100 dark:bg-black p-4 " >
+    <div className="mt-16 h-screen overflow-hidden bg-gray-100 dark:bg-black p-4 " >
       <div className="max-w-4xl mx-auto flex items-center justify-center h-full transition-transform duration-300 hover:scale-105">
         <div className="relative bg-white dark:bg-dark p-6 rounded-2xl shadow-lg shadow-primary w-full max-w-2xl">
           {/* Back Arrow in top-left corner */}

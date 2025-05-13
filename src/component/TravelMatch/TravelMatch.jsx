@@ -108,6 +108,63 @@ const TravelMatch = () => {
       setIsSubmitting(false);
     }
   };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   setIsSubmitting(true);
+  //   setError(null);
+  //   setSuccess(null);
+  
+  //   try {
+  //     const token = localStorage.getItem('accessToken'); // Assuming you store auth token
+  //     if (!token) throw new Error('User not authenticated.');
+  
+  //     const response = await fetch('http://127.0.0.1:8000/api/travel/submit/', {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': `Bearer ${token}`
+  //       },
+  //       body: JSON.stringify({
+  //         ...formData
+  //       })
+  //     });
+  
+  //     if (!response.ok) {
+  //       const data = await response.json();
+  //       throw new Error(data.detail || 'Failed to submit travel details.');
+  //     }
+  
+  //     const data = await response.json();
+  
+  //     setSuccess(
+  //       data.matches.length > 0 
+  //         ? `Found ${data.matches.length} potential travel buddies! Check the chat to connect with them.`
+  //         : "Travel details saved! We'll notify you when we find a match."
+  //     );
+  
+  //     setFormData(prev => ({
+  //       ...prev,
+  //       currentLocation: '',
+  //       travelLocation: '',
+  //       travelDate: '',
+  //       returnDate: '',
+  //       interests: '',
+  //     }));
+  
+  //     if (data.matches.length > 0) {
+  //       setTimeout(() => {
+  //         navigate('/travel-chat');
+  //       }, 2000);
+  //     }
+  
+  //   } catch (err) {
+  //     setError(err.message);
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+  
+
 
   if (isLoading) {
     return (
@@ -286,7 +343,7 @@ const TravelMatch = () => {
             <button
               type="button"
               onClick={() => navigate('/travel-chat')}
-              className="px-6 py-3 bg-gray-200 font-serif dark:text-white text-black rounded-md hover:bg-primary transition duration-300"
+              className="px-6 py-3 bg-gray-200 font-serif dark:text-white !text-black rounded-md hover:bg-primary transition duration-300"
             >
               View Matches
             </button>

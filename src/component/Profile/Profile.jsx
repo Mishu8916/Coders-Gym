@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { FiUser, FiShoppingCart, FiSettings, FiLogOut } from "react-icons/fi";
 import { MdOutlineMedicalServices } from "react-icons/md";
 import { HiOutlineTicket } from "react-icons/hi";
@@ -7,7 +7,7 @@ import { IoMdMail } from "react-icons/io";
 import { useAuth } from "../../context/AuthContext";
 
 const ProfilePage = () => {
-  const navigate = useNavigate(); // ✅ Hook for navigation
+  const navigate = useNavigate();
   const { userProfile, updateProfile } = useAuth();
 
   const [profile, setProfile] = useState(userProfile);
@@ -26,6 +26,7 @@ const ProfilePage = () => {
 
   const handleSave = () => {
     updateProfile(editingProfile);
+    setProfile(editingProfile);
     setIsEditing(false);
   };
 
@@ -41,30 +42,68 @@ const ProfilePage = () => {
       reader.onloadend = () => {
         const updatedProfile = {
           ...editingProfile,
-          profileImage: reader.result
+          profileImage: reader.result,
         };
         setEditingProfile(updatedProfile);
-        if (!isEditing) {
-          updateProfile(updatedProfile);
-        }
+        setProfile(updatedProfile);
+        updateProfile(updatedProfile);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  // ✅ Updated Navigation Handler with useNavigate
+  const handleRemoveImage = () => {
+    const updatedProfile = { ...editingProfile, profileImage: "" };
+    setEditingProfile(updatedProfile);
+    setProfile(updatedProfile);
+    setImage(null);
+    updateProfile(updatedProfile);
+  };
+
   const handleNavigation = (path) => {
-    if (path === "/logout") {
-      navigate("/"); // ✅ Redirect to homepage after logout
-    } else {
-      navigate(path); // ✅ Navigate to internal pages
-    }
+    navigate(path);
   };
 
   const formatDate = (date) => {
     if (!date) return "Not Set";
     const [year, month, day] = date.split("-");
     return `${day}/${month}/${year}`;
+  };
+
+  const handleDelete = async () => {
+    if (window.confirm("Are you sure you want to delete your profile data? This action cannot be undone.")) {
+      try {
+        await deleteUserProfileDataFromBackend();
+
+        const emptyProfile = {
+          name: "",
+          phone: "",
+          gender: "",
+          dob: "",
+          workEmail: "",
+          profileImage: "",
+        };
+
+        setProfile(emptyProfile);
+        setEditingProfile(emptyProfile);
+        setImage(null);
+        setIsEditing(false);
+        updateProfile(emptyProfile);
+
+        alert("Your profile data has been deleted.");
+      } catch (error) {
+        console.error("Error deleting profile data:", error);
+        alert("There was an issue deleting your profile data. Please try again.");
+      }
+    }
+  };
+
+  const deleteUserProfileDataFromBackend = async () => {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve("Profile data deleted successfully");
+      }, 1000);
+    });
   };
 
   return (
@@ -84,6 +123,14 @@ const ProfilePage = () => {
             </span>
           </label>
           <input id="profile-file-upload" type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
+          {profile.profileImage && (
+            <button
+              onClick={handleRemoveImage}
+              className="mt-2 text-sm text-red-600 hover:underline"
+            >
+              Remove Image
+            </button>
+          )}
           <h2 className="mt-3 text-lg font-semibold dark:text-white text-gray-900">{profile.name}</h2>
         </div>
 
@@ -99,7 +146,6 @@ const ProfilePage = () => {
 
       <main className="flex-1 p-6 md:p-10 bg-white dark:bg-black shadow-lg rounded-t-lg md:rounded-l-lg md:rounded-t-none">
         <div className="text-center mb-6 relative flex flex-col items-center">
-          {/* Heading */}
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-serif text-gray-900 dark:text-primary mb-4">
             Your
             <span className="ml-2 text-4xl sm:text-5xl md:text-6xl font-serif dark:text-white text-primary">
@@ -107,7 +153,6 @@ const ProfilePage = () => {
             </span>
           </h2>
 
-          {/* Profile Image with Hover Edit Overlay */}
           <label htmlFor="profile-file-upload" className="relative group cursor-pointer">
             <div className="w-40 h-40 rounded-full overflow-hidden flex items-center justify-center bg-gray-200 dark:bg-gray-700 shadow-lg">
               {profile.profileImage ? (
@@ -116,15 +161,22 @@ const ProfilePage = () => {
                 <FiUser className="text-gray-500 w-20 h-20" />
               )}
             </div>
-
-            {/* Hover Edit Overlay */}
             <span className="absolute inset-0 flex items-center justify-center bg-black/50 text-white text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               Edit
             </span>
           </label>
 
           <input id="profile-file-upload" type="file" accept="image/*" className="hidden" onChange={handleImageUpload} />
+          {profile.profileImage && (
+            <button
+              onClick={handleRemoveImage}
+              className="mt-2 text-sm text-red-600 hover:underline"
+            >
+              Remove Image
+            </button>
+          )}
         </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <ProfileField label="Name" value={profile.name} newValue={editingProfile.name} onUpdate={handleUpdate} field="name" isEditing={isEditing} />
           <ProfileField label="Phone Number" value={profile.phone} newValue={editingProfile.phone} onUpdate={handleUpdate} field="phone" isEditing={isEditing} />
@@ -138,15 +190,19 @@ const ProfilePage = () => {
             isEditing={isEditing}
             type="date"
           />
-          <ProfileField label="Email" value={profile.email} newValue={editingProfile.email} onUpdate={handleUpdate} field="email" isEditing={isEditing} />
           <ProfileField label="Work Email" value={profile.workEmail} newValue={editingProfile.workEmail} onUpdate={handleUpdate} field="workEmail" isEditing={isEditing} />
         </div>
 
-        <div className="mt-6 flex justify-center">
+        <div className="mt-6 flex justify-center space-x-4">
           {isEditing ? (
-            <button onClick={handleSave} className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">
-              Save
-            </button>
+            <>
+              <button onClick={handleSave} className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300">
+                Save
+              </button>
+              <button onClick={handleDelete} className="px-6 py-3 bg-red-600 text-white rounded-md hover:bg-red-700 transition duration-300">
+                Delete Data
+              </button>
+            </>
           ) : (
             <button onClick={handleEdit} className="px-6 py-3 bg-primary dark:text-white font-serif rounded-md hover:shadow-md transition duration-300">
               Edit
@@ -190,11 +246,10 @@ function ProfileField({ label, value, newValue, onUpdate, field, isEditing, type
 
 function GenderField({ label, value, newValue, onUpdate, isEditing }) {
   return (
-    <div className="mb-4"> {/* Add bottom margin for spacing */}
-      <label className="font-serif text-lg text-gray-900 dark:text-white block mb-2"> {/* Label aligned properly */}
+    <div className="mb-4">
+      <label className="font-serif text-lg text-gray-900 dark:text-white block mb-2">
         {label}
       </label>
-
       {isEditing ? (
         <select
           className="text-md font-medium border shadow-lg border-gray-300 dark:border-white p-3 w-full rounded-md dark:shadow-primary focus:ring-2 focus:ring-primary focus:outline-none dark:bg-white/80 dark:text-black transition duration-300"

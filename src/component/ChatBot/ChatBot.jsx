@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { FaRobot, FaTimes, FaPaperPlane, FaStar } from 'react-icons/fa';
 
-const ChatBot = () => {
+const ChatBox = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
@@ -13,28 +13,40 @@ const ChatBot = () => {
   const predefinedQuestions = [
     {
       question: "What services do you offer?",
-      answer: "We offer various fitness services including personal training, group classes, yoga, and nutrition counseling. You can also access our mindfulness library and travel buddy matching service.",
-      followUp: "Would you like to know more about any specific service?"
+      answer:
+        "We offer various fitness services including personal training, group classes, yoga, and nutrition counseling. You can also access our mindfulness library and travel buddy matching service.",
+      followUp: "Would you like to know more about any specific service?",
     },
     {
       question: "How can I book a class?",
-      answer: "You can book a class through our website by navigating to the Fitness section and selecting your preferred class. You'll need to be logged in to make a booking.",
-      followUp: "Would you like help with the booking process?"
+      answer:
+        "You can book a class through our website by navigating to the Fitness section and selecting your preferred class. You'll need to be logged in to make a booking.",
+      followUp: "Would you like help with the booking process?",
     },
     {
       question: "What are your membership plans?",
-      answer: "We offer several membership plans including Coders-Gym Pass, Coders-Gym Transform, and Coders-Gym Elite. Each plan comes with different benefits and durations.",
-      followUp: "Would you like to know the details of any specific plan?"
+      answer:
+        "We offer several membership plans including Coders-Gym Pass, Coders-Gym Transform, and Coders-Gym Elite. Each plan comes with different benefits and durations.",
+      followUp: "Would you like to know the details of any specific plan?",
     },
     {
       question: "How do I find a travel buddy?",
-      answer: "You can use our Travel Match feature to find travel buddies. Simply go to the Travel Match section, set your preferences, and we'll help you connect with like-minded travelers.",
-      followUp: "Would you like to know more about the Travel Match feature?"
-    }
+      answer:
+        "You can use our Travel Match feature to find travel buddies. Simply go to the Travel Match section, set your preferences, and we'll help you connect with like-minded travelers.",
+      followUp: "Would you like to know more about the Travel Match feature?",
+    },
+  ];
+
+  const greetings = [
+    "Hi there! 👋 How can I assist you today?",
+    "Hello! 😊 What can I do for you?",
+    "Hey! Ready to get fit or travel smart?",
+    "Greetings! Let me help you on your wellness journey.",
+    "Yo! How can Coders Gym help you today?"
   ];
 
   const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
@@ -43,7 +55,6 @@ const ChatBot = () => {
 
   useEffect(() => {
     if (isOpen && conversationStep === 'greeting') {
-      // Initial greeting
       setTimeout(() => {
         const greeting = {
           type: 'bot',
@@ -58,20 +69,18 @@ const ChatBot = () => {
   }, [isOpen, conversationStep]);
 
   const handleQuestionClick = (question) => {
-    // Add user message
     const newMessage = {
       type: 'user',
       content: question,
       time: new Date().toLocaleTimeString(),
     };
-    setMessages(prev => [...prev, newMessage]);
+    setMessages((prev) => [...prev, newMessage]);
     setShowOptions(false);
     setConversationStep('answering');
 
-    // Simulate bot response with typing indicator
     setTimeout(() => {
       const matchingQuestion = predefinedQuestions.find(
-        q => q.question.toLowerCase() === question.toLowerCase()
+        (q) => q.question.toLowerCase() === question.toLowerCase()
       );
 
       const botResponse = {
@@ -79,16 +88,15 @@ const ChatBot = () => {
         content: matchingQuestion.answer,
         time: new Date().toLocaleTimeString(),
       };
-      setMessages(prev => [...prev, botResponse]);
+      setMessages((prev) => [...prev, botResponse]);
 
-      // Show follow-up question after a delay
       setTimeout(() => {
         const followUp = {
           type: 'bot',
           content: matchingQuestion.followUp,
           time: new Date().toLocaleTimeString(),
         };
-        setMessages(prev => [...prev, followUp]);
+        setMessages((prev) => [...prev, followUp]);
         setShowOptions(true);
         setConversationStep('followUp');
       }, 1500);
@@ -99,41 +107,58 @@ const ChatBot = () => {
     e.preventDefault();
     if (!inputMessage.trim()) return;
 
-    // Add user message
+    const userMessage = inputMessage.trim();
     const newMessage = {
       type: 'user',
-      content: inputMessage,
+      content: userMessage,
       time: new Date().toLocaleTimeString(),
     };
-    setMessages(prev => [...prev, newMessage]);
+    setMessages((prev) => [...prev, newMessage]);
     setInputMessage('');
     setShowOptions(false);
     setConversationStep('answering');
 
-    // Simulate bot response
     setTimeout(() => {
-      const matchingQuestion = predefinedQuestions.find(
-        q => q.question.toLowerCase() === inputMessage.toLowerCase()
-      );
+      let botText;
+      const lowerMessage = userMessage.toLowerCase();
+
+      // Handle greetings
+      if (["hi", "hello", "hii", "hey", "yo"].includes(lowerMessage)) {
+        botText = greetings[Math.floor(Math.random() * greetings.length)];
+      } else if (lowerMessage.includes("how are you")) {
+        botText = "I'm doing great, thank you! 😊 What can I do for you today?";
+      } else {
+        const matchingQuestion = predefinedQuestions.find(
+          (q) => q.question.toLowerCase() === lowerMessage
+        );
+
+        botText = matchingQuestion
+          ? matchingQuestion.answer
+          : "I'm sorry, I didn't quite catch that. Try asking about our services, class booking, memberships, or travel buddy feature.";
+      }
 
       const botResponse = {
         type: 'bot',
-        content: matchingQuestion
-          ? matchingQuestion.answer
-          : "I'm sorry, I don't understand that question. Please try asking about our services, booking classes, membership plans, or travel buddy matching.",
+        content: botText,
         time: new Date().toLocaleTimeString(),
       };
-      setMessages(prev => [...prev, botResponse]);
+      setMessages((prev) => [...prev, botResponse]);
 
-      // Show follow-up or options
       setTimeout(() => {
-        if (matchingQuestion) {
+        const matchingQuestion = predefinedQuestions.find(
+          (q) => q.question.toLowerCase() === lowerMessage
+        );
+
+        if (greetings.includes(botText) || botText.includes("😊")) {
+          setShowOptions(true);
+          setConversationStep('options');
+        } else if (matchingQuestion) {
           const followUp = {
             type: 'bot',
             content: matchingQuestion.followUp,
             time: new Date().toLocaleTimeString(),
           };
-          setMessages(prev => [...prev, followUp]);
+          setMessages((prev) => [...prev, followUp]);
           setShowOptions(true);
           setConversationStep('followUp');
         } else {
@@ -150,17 +175,17 @@ const ChatBot = () => {
       content: `Rating: ${rating} stars`,
       time: new Date().toLocaleTimeString(),
     };
-    setMessages(prev => [...prev, ratingMessage]);
+    setMessages((prev) => [...prev, ratingMessage]);
     setShowRating(false);
 
-    // Final thank you message
     setTimeout(() => {
       const thankYou = {
         type: 'bot',
-        content: "Thank you for your feedback! Let me know if you need any further assistance. Have a great day!",
+        content:
+          'Thank you for your feedback! Let me know if you need any further assistance. Have a great day!',
         time: new Date().toLocaleTimeString(),
       };
-      setMessages(prev => [...prev, thankYou]);
+      setMessages((prev) => [...prev, thankYou]);
       setShowOptions(false);
       setConversationStep('ended');
     }, 1000);
@@ -169,10 +194,11 @@ const ChatBot = () => {
   const handleEndConversation = () => {
     const endMessage = {
       type: 'bot',
-      content: "Thank you for chatting with me! Before you go, would you like to rate our conversation?",
+      content:
+        'Thank you for chatting with me! Before you go, would you like to rate our conversation?',
       time: new Date().toLocaleTimeString(),
     };
-    setMessages(prev => [...prev, endMessage]);
+    setMessages((prev) => [...prev, endMessage]);
     setShowOptions(false);
     setShowRating(true);
     setConversationStep('rating');
@@ -180,27 +206,20 @@ const ChatBot = () => {
 
   return (
     <div className="fixed bottom-4 left-4 z-50">
-      {/* Chat Toggle Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className={`bg-primary text-white p-4 rounded-full shadow-lg hover:bg-primary/90 transition-all duration-300 ${isOpen ? 'hidden' : 'block'
-          }`}
+        className={`bg-primary text-white p-4 rounded-full shadow-lg hover:bg-primary/90 transition-all duration-300 ${isOpen ? 'hidden' : 'block'}`}
       >
         <FaRobot className="text-3xl" />
       </button>
 
-      {/* Chat Window */}
       {isOpen && (
         <div className="bg-white dark:bg-dark rounded-lg shadow-xl w-[50vw] sm:w-[400px] md:w-[500px] lg:w-[600px] h-[80vh] sm:h-[600px] flex flex-col">
-          {/* Chat Header */}
           <div className="bg-primary text-white p-4 rounded-t-lg relative flex items-center justify-center">
-            {/* Centered Title */}
             <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center gap-2">
               <FaRobot className="text-2xl" />
               <h3 className="font-serif text-lg">Coders Gym Assistant</h3>
             </div>
-
-            {/* Close Button */}
             <button
               onClick={() => setIsOpen(false)}
               className="ml-auto hover:bg-white/20 p-2 rounded-full transition-colors z-10"
@@ -209,25 +228,12 @@ const ChatBot = () => {
             </button>
           </div>
 
-
-          {/* Chat Messages */}
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'
-                  }`}
-              >
-                <div
-                  className={`max-w-[80%] rounded-lg p-3 ${message.type === 'user'
-                      ? 'bg-primary text-white'
-                      : 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white'
-                    }`}
-                >
+              <div key={index} className={`flex ${message.type === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div className={`max-w-[80%] rounded-lg p-3 ${message.type === 'user' ? 'bg-primary text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white'}`}>
                   <p className="text-base">{message.content}</p>
-                  <span className="text-xs opacity-70 mt-1 block">
-                    {message.time}
-                  </span>
+                  <span className="text-xs opacity-70 mt-1 block">{message.time}</span>
                 </div>
               </div>
             ))}
@@ -269,9 +275,8 @@ const ChatBot = () => {
             <div ref={messagesEndRef} />
           </div>
 
-          {/* Chat Input */}
           {conversationStep !== 'ended' && (
-            <form onSubmit={handleSendMessage} className="p-4 border-t dark:border-gray-700">
+            <form onSubmit={handleSendMessage} className="dark:text-white p-4 border-t dark:border-gray-700">
               <div className="flex gap-2">
                 <input
                   type="text"
@@ -295,4 +300,4 @@ const ChatBot = () => {
   );
 };
 
-export default ChatBot; 
+export default ChatBox;

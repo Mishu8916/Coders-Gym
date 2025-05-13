@@ -1,7 +1,15 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { FaPaperPlane, FaUser, FaArrowLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+
+// Inline axios instance
+const api = axios.create({
+  baseURL: 'http://127.0.0.1:8000/api/chat/profiles/',
+  withCredentials: true,
+});
 
 const TravelChat = () => {
   const { userProfile, isAuthenticated } = useAuth();
@@ -14,64 +22,57 @@ const TravelChat = () => {
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
-    // Check if user is authenticated
     if (!isAuthenticated) {
       navigate('/login');
       return;
     }
 
-    // Load matches from localStorage
-    const loadMatches = () => {
-      const allTravelMatches = JSON.parse(localStorage.getItem('travelMatches') || '[]');
-      const currentUserMatches = allTravelMatches.filter(match => 
-        // Find travel matches with same destination and date
-        allTravelMatches.some(otherMatch => 
-          otherMatch.userId !== match.userId &&
-          otherMatch.travelLocation.toLowerCase() === match.travelLocation.toLowerCase() &&
-          otherMatch.travelDate === match.travelDate
-        )
-      );
-
-      setMatches(currentUserMatches);
+    const fetchMatches = async () => {
+      try {
+        const response = await api.get('profiles/');
+        setMatches(response.data);
+      } catch (error) {
+        console.error('Error fetching matches:', error);
+      } finally {
+        setIsLoading(false);
+      }
     };
 
-    loadMatches();
-    setIsLoading(false);
+    fetchMatches();
   }, [isAuthenticated, navigate]);
 
   useEffect(() => {
-    // Load chat messages from localStorage when a match is selected
-    if (selectedMatch) {
-      const chatKey = `chat_${Math.min(userProfile.id, selectedMatch.userId)}_${Math.max(userProfile.id, selectedMatch.userId)}`;
-      const savedMessages = JSON.parse(localStorage.getItem(chatKey) || '[]');
-      setMessages(savedMessages);
-    }
-  }, [selectedMatch, userProfile.id]);
+    const fetchMessages = async () => {
+      if (!selectedMatch) return;
+      try {
+        const response = await api.get(`chat/${selectedMatch.user.id}/`);
+        setMessages(response.data);
+      } catch (error) {
+        console.error('Error fetching messages:', error);
+      }
+    };
+
+    fetchMessages();
+  }, [selectedMatch]);
 
   useEffect(() => {
-    // Scroll to bottom of messages
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const handleSendMessage = (e) => {
+  const handleSendMessage = async (e) => {
     e.preventDefault();
     if (!newMessage.trim() || !selectedMatch) return;
 
-    const message = {
-      id: Date.now(),
-      sender: userProfile.id,
-      receiver: selectedMatch.userId,
-      text: newMessage,
-      timestamp: new Date().toISOString(),
-    };
+    try {
+      const response = await api.post(`chat/${selectedMatch.user.id}/`, {
+        text: newMessage,
+      });
 
-    // Save message to localStorage
-    const chatKey = `chat_${Math.min(userProfile.id, selectedMatch.userId)}_${Math.max(userProfile.id, selectedMatch.userId)}`;
-    const updatedMessages = [...messages, message];
-    localStorage.setItem(chatKey, JSON.stringify(updatedMessages));
-    
-    setMessages(updatedMessages);
-    setNewMessage('');
+      setMessages((prev) => [...prev, response.data]);
+      setNewMessage('');
+    } catch (error) {
+      console.error('Error sending message:', error);
+    }
   };
 
   if (isLoading) {
@@ -87,7 +88,7 @@ const TravelChat = () => {
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <h1 className="text-4xl font-serif text-black/90 dark:text-white">
-            Travel's<span className='text-primary'> Buddy</span> Chat
+            Travel's<span className="text-primary"> Buddy</span> Chat
           </h1>
           <button
             onClick={() => navigate('/travel-match')}
@@ -132,13 +133,13 @@ const TravelChat = () => {
                       </div>
                       <div>
                         <h3 className="font-medium text-gray-900 dark:text-white">
-                          {match.name}
+                          {match.user.username}
                         </h3>
                         <p className="text-sm text-gray-500 dark:text-gray-400">
-                          Traveling to {match.travelLocation}
+                          Traveling to {match.travel_location}
                         </p>
                         <p className="text-xs text-gray-500 dark:text-gray-400">
-                          {new Date(match.travelDate).toLocaleDateString()}
+                          {new Date(match.travel_date).toLocaleDateString()}
                         </p>
                       </div>
                     </div>
@@ -159,10 +160,10 @@ const TravelChat = () => {
                       </div>
                       <div>
                         <h3 className="font-medium text-gray-900 dark:text-white">
-                          {selectedMatch.name}
+                          {selectedMatch.user.username}
                         </h3>
                         <p className="text-sm text-gray-500 dark:text-gray-400">
-                          {selectedMatch.age} years old • {selectedMatch.travelLocation}
+                          {selectedMatch.age} years old • {selectedMatch.travel_location}
                         </p>
                       </div>
                     </div>
@@ -175,12 +176,12 @@ const TravelChat = () => {
                         <div
                           key={message.id}
                           className={`flex ${
-                            message.sender === userProfile.id ? 'justify-end' : 'justify-start'
+                            message.sender.id === userProfile.id ? 'justify-end' : 'justify-start'
                           }`}
                         >
                           <div
                             className={`max-w-[70%] rounded-lg p-3 ${
-                              message.sender === userProfile.id
+                              message.sender.id === userProfile.id
                                 ? 'bg-primary text-white'
                                 : 'bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white'
                             }`}
@@ -228,4 +229,4 @@ const TravelChat = () => {
   );
 };
 
-export default TravelChat; 
+export default TravelChat;
